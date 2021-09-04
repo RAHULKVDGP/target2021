@@ -1,0 +1,1693 @@
+Link - https://www.oracletutorial.com/
+
+> What is the difference between DELETE and TRUNCATE statements?
+
+DELETE
+	Delete command is used to delete one or more row in a table.	
+	You can rollback data after using delete statement.	
+	It is a DML command.	
+	It is slower than truncate statement.	
+TRUNCATE
+	Truncate is used to delete all the rows from a table.
+	You cannot rollback data.
+	It is a DDL command.
+	It is faster.
+
+____________________________________________________________________________________________________________________________________________________________
+
+What are the different subsets of SQL?
+
+DDL (Data Definition Language) – It allows you to define the database schema. CREATE, ALTER, DROP, TRUNCATE and RENAME.
+DML ( Data Manipulation Language) – It allows you to access and manipulate data present in database.INSERT, UPDATE, DELETE, MERGE
+DCL ( Data Control Language) – It allows you to control access to the database. Example – Grant, Revoke access permissions.
+TCL (Transactional control Language) - Transaction Control Language commands are used to manage transactions in the database. COMMIT, ROLLBACK, SAVEPOINT, SET TRANSACTION
+				       It allows you to manage the changes made by DML-statements.
+
+____________________________________________________________________________________________________________________________________________________________
+
+What do you mean by table and field in SQL?
+
+> A table refers to a collection of data in an organised manner in form of rows(tuple) and columns(attribute). 
+> A field refers to the number of columns in a table. 
+
+For example:
+Table: StudentInformation
+Field: Stu Id, Stu Name, Stu Marks
+
+____________________________________________________________________________________________________________________________________________________________
+
+What are joins in SQL?
+
+> A JOIN clause is used to combine rows from two or more tables, based on a related column between them.  
+> NULL value is used as output if there is no match.
+
+There are 4 joins in SQL namely:
+
+Inner Join : It is used to return all the rows from both tables where the join condition is satisfied. 
+
+SELECT table1.column1, table2.column2, ......
+FROM table1
+INNER JOIN table2 ON column1.table1=column2.table2; 			# INNER JOIN table2 USING(column1) if column1 is present in both the table.
+
+Left Join : It is used to return all the rows from both tables where the join condition is satisfied and also include non-satisfying rows from left table.
+
+SELECT table1.column1, table2.column2, ......
+FROM table1
+LEFT JOIN table2 ON column1.table1=column2.table2;
+
+Right Join : It is used to return all the rows from both tables where the join condition is satisfied and also include non-satisfying rows from Right table.
+
+SELECT table1.column1, table2.column2, ......
+FROM table1
+RIGHT JOIN table2 ON column1.table1=column2.table2;
+
+Full Join : It is used to return all the rows from both tables where the join condition is satisfied and also include non-satisfying rows from both table.
+	    It's similar to union of left join and right join.
+
+SELECT table1.column1, table2.column2, ......
+FROM table1
+FULL JOIN table2 ON column1.table1=column2.table2;
+
+OR
+
+SELECT table1.column1, table2.column2, ......
+FROM table1
+LEFT JOIN table2 ON column1.table1=column2.table2
+UNION
+SELECT table1.column1, table2.column2, ......
+FROM table1
+RIGHT JOIN table2 ON column1.table1=column2.table2;
+____________________________________________________________________________________________________________________________________________________________
+
+What is the difference between CHAR and VARCHAR2 datatype in SQL?
+
+> Both Char and Varchar2 are used for characters datatype 
+> varchar2 is used for character strings of variable length whereas Char is used for strings of fixed length. 
+> For example, char(10) can only store 10 characters and will not be able to store a string of any other length whereas varchar2(10) can store any length i.e 6,8,2 in this variable.
+____________________________________________________________________________________________________________________________________________________________
+
+What is candidate key?
+
+> CANDIDATE KEY is a set of attributes that uniquely identify tuples in a table.
+
+What is prime-attribute?
+
+> Attributes that form a CANDIDATE KEY in a table are called prime attributes. And rest of the attributes are non-prime attribute.
+____________________________________________________________________________________________________________________________________________________________
+
+What is a Unique key?
+
+> Uniquely identifies a single row in the table.
+> Null values allowed but dublicate values are not allowed.
+> Multiple unique keys can present in a table. 
+____________________________________________________________________________________________________________________________________________________________
+
+What is a Primary key?
+
+> A Primary key is a column or a set of columns(attributes) that uniquely identifies every row in the table.
+> Null values are not allowed.
+> Only one primary Key can be present in one table.
+
+____________________________________________________________________________________________________________________________________________________________
+
+What is a Foreign key?
+
+> Foreign key maintains referential integrity by enforcing a link between the data in two tables.
+> The foreign key in the child table references the primary key in the parent table.
+____________________________________________________________________________________________________________________________________________________________
+
+What are Constraints?
+
+> Constraints are used to specify the limit on the data type of the table. It can be specified while creating or altering the table statement. 
+
+NOT NULL - Ensures that a column cannot have a NULL value. 
+UNIQUE - Ensures that all values in a column are different. column_name data_type UNIQUE
+PRIMARY KEY - A combination of a NOT NULL and UNIQUE. Uniquely identifies each row in a table. table constraint. PRIMARY KEY (col1, col2,...)
+FOREIGN KEY - Uniquely identifies a row/record in another table. Table constraint. FOREIGN KEY(col1, col2,...) REFERENCES parent_table(col1,col2)
+CHECK - Ensures that all values in a column satisfies a specific condition. column_name data_type CHECK (expression),
+DEFAULT - Sets a default value for a column when no value is specified.  column_name data_type DEFAULT 'Specified_value'.
+____________________________________________________________________________________________________________________________________________________________
+
+What do you mean by data integrity? 
+
+> Data Integrity defines the accuracy and consistency of the data stored in a database.
+> Which can be achieved by
+1) By Constraints
+	> Entity Integrity : it ensures each row in a table is a uniquely identifiable entity. Using primary key, unique key, and not null Constraints.
+	> Referential Integrity : it ensures the relationship between the Tables. Using Foreign Key Constraints.
+	> Domain Integrity : it ensures the data values in a database follow defined rules for values, range, and format. Check and Default Constraints.
+2) By Triggers
+____________________________________________________________________________________________________________________________________________________________
+
+What is index and what are the types of Indexes in SQL?
+
+> Indexes are used to speed-up query process in SQL Server, resulting in high performance. 
+> Index helps in easy retrieval of data without scanning the full data set. 
+
+Unique Index:
+	> This index does not allow the field to have duplicate values if the column is unique indexed. 
+	> If a primary key is defined, a unique index can be applied automatically.
+
+Clustered Index : 
+	> A clustered index defines the order in which data is physically stored in a table. 
+	> Table data can be sorted in only way, therefore, there can be only one clustered index per table. 
+
+Non-Clustered Index :
+	> A non-clustered index doesn’t sort the physical data inside the table. 
+	> In fact, a non-clustered index is stored at one place and table data is stored in another place.
+	> The index contains column values on which the index is created and the address of the record that the column value belongs to.
+	> There can be more than one non-clustered index per table.
+
+Example	:
+CREATE CLUSTERED INDEX IX_tblStudent_Gender_Score
+ON student(gender ASC, total_score DESC)
+
+CREATE NONCLUSTERED INDEX IX_tblStudent_Name
+ON student(name ASC)
+
+____________________________________________________________________________________________________________________________________________________________
+
+What is the difference between clustered and non clustered index in SQL?
+
+> Clustered index is faster whereas non clustered index is relatively slower.
+> One table can only have one clustered index whereas it can have many non clustered index.
+> Clustered index alters the way records are stored in a database where as non clustered index is stored at one place and table data is stored in another place.
+____________________________________________________________________________________________________________________________________________________________
+
+Write a SQL query to display the current date?
+
+> The GETDATE() and SYSDATE() function returns the current database system date and time, in a 'YYYY-MM-DD hh:mm:ss. mmm' format.
+
+In Oracle 11g, below commands are used to display and alter date time :
+
+select sysdate, systimestamp, dbtimezone from dual;    ---------------- Returned in time zone of the OS on which DB Server resides. 
+select systimestamp at time zone 'UTC' from DUAL;     ------------ Coordinated Universal Time (UTC)
+select to_char(sysdate,'DD-MON-YYYY HH24:MI:SS') from dual;
+select current_date, current_timestamp, localtimestamp, sessiontimezone from dual;   ------- Returned in local/session time zone.
+
+alter session set nls_date_format = 'DD-MON-YYYY HH24:MI:SS';      ------------ To change the session date format
+alter session set TIME_ZONE = 'Asia/Calcutta';              ------------ To change the session time zone
+alter session set TIME_ZONE = 'Europe/London';      ------------ To change the database time zone
+
+____________________________________________________________________________________________________________________________________________________________
+
+What is Data Anomalies?
+
+> Normalization comes into existance because of the problems occurred on data, these are know as Data Anomalies.
+Types of Anomalies :
+	> INSERTION Anomalies
+	> UPDATION Anomalies
+	> DELETION Anomalies
+____________________________________________________________________________________________________________________________________________________________
+
+What is Normalization and what are the advantages of it?
+
+> Normalization is the process of organizing data to avoid duplication and redundancy
+> Some of the advantages are:
+	To minimize duplicate data
+	Allows easy modification
+	To simplify queries.
+	Easier to implement Security
+____________________________________________________________________________________________________________________________________________________________
+
+Explain different types of Normalization?
+
+> There are many successive levels of normalization. These are called normal forms.
+> Each consecutive normal form depends on the previous one.
+
+First Normal Form (1NF) - First Normal form ensures every column should have a single value.
+Condition to be in 1NF :
+	It should only have single(atomic) valued attributes/columns.
+
+Second Normal Form (2NF) -
+Condition to be in 2NF :
+	It has to be in 1NF
+	Every non-primary-key attribute is fully functionally dependent on the primary key.
+	 
+Third Normal Form (3NF) – 
+Condition to be in 3NF :
+	It has to be in 2NF 
+	No non-primary-key attribute is transitively dependent on the primary key.(A --> B --> C)
+
+BCNF(Boyce–Codd normal form) - Fourth form of normalization is BCNF and it makes sure that the table is in 3NF and there would be only one candidate key present.
+	 
+____________________________________________________________________________________________________________________________________________________________
+
+What is ACID property in a database?
+
+> In order to maintain consistency in a database, before and after the transaction, certain properties are followed. These are called ACID properties.
+> ACID stands for Atomicity, Consistency, Isolation, Durability. 
+
+Atomicity: 
+> Atomicity is also known as the ‘All or nothing rule’. 
+> By this property, either the entire transaction takes place at once or doesn’t happen at all. There is no midway i.e. transactions do not occur partially.
+
+Consistency: 
+> The database must remain in a consistent state before and after any transaction.
+
+Isolation: 
+> No transaction will affect the existence of any other transaction in the database.
+
+Durability
+> The database should be durable enough to hold all its  latest transaction updates even if the system fails or restarts.
+____________________________________________________________________________________________________________________________________________________________
+
+What is denormalization?
+
+> Denormalization is a method used to improve the performance of a database, allowing the retrieval of data in quickest time.
+> The process of denormalization adds redundant data into a table which in turn enables the performance of database.
+> It is the reverse process of normalization.
+
+____________________________________________________________________________________________________________________________________________________________
+
+What do you mean by “Trigger” in SQL?
+
+> A trigger is a stored procedure in database which automatically invokes whenever a special event in the database occurs.
+> Types of Triggers in Oracle
+DML Trigger: It fires when the DML event is specified (INSERT/UPDATE/DELETE)
+DDL Trigger: It fires when the DDL event is specified (CREATE/ALTER)
+DATABASE Trigger: It fires when the database event is specified (LOGON/LOGOFF/STARTUP/SHUTDOWN)
+
+SYNTAX :
+
+create trigger [trigger_name] 
+[before | after]  
+{insert | update | delete}  
+on [table_name]  
+[for each row]  
+[trigger_body] 
+
+Example -
+
+create trigger stud_marks 
+before INSERT 
+on 
+Student 
+for each row 
+set Student.total = Student.subj1 + Student.subj2 + Student.subj3, Student.per = Student.total * 60 / 100;
+
+
+Use Before Trigger:
+In the case of validation check in the same object.
+Insert or update the same object.
+
+Use After Trigger:
+Insert/Update related object, not the same object because after inserting or updating, we cannot update a record.
+Notification email.
+
+
+____________________________________________________________________________________________________________________________________________________________
+
+What are the different operators available in SQL?
+
+> Generally there are three types of operators in SQL:
+
+SQL Arithmetic Operators
+	+	It is used to add containing values of both operands
+	-	It subtracts right hand operand from left hand operand
+	*	It multiply both operand's values
+	/	It divides left hand operand by right hand operand
+	%	It divides left hand operand by right hand operand and returns reminder
+
+SQL Comparison Operators
+	=	Examine both operands value that are equal or not,if yes condition become true.
+	!=	This is used to check the value of both operands equal or not,if not condition become true.
+	<>	Examines the operand's value equal or not, if values are not equal condition is true.
+	>	Examine the left operand value is greater than right Operand, if yes condition becomes true.
+	<	Examines the left operand value is less than right Operand, if yes condition becomes true.
+	>=	Examines that the value of left operand is greater than or equal to the value of right operand or not,if yes condition become true.
+	<=	Examines that the value of left operand is less than or equal to the value of right operand or not, if yes condition becomes true.
+	!<	Examines that the left operand value is not less than the right operand value
+	!>	Examines that the value of left operand is not greater than the value of right operand.
+
+SQL Logical Operators
+	ALL	this is used to compare a value to all values in another value set.
+	AND	this operator allows the existence of multiple conditions in an SQL statement.
+	ANY	this operator is used to compare the value in list according to the condition.
+	BETWEEN	this operator is used to search for values, that are within a set of values
+	IN	this operator is used to compare a value to that specified list value
+	NOT	the NOT operator reverse the meaning of any logical operator
+	OR	this operator is used to combine multiple conditions in SQL statements
+	EXISTS	the EXISTS operator is used to search for the presence of a row in a specified table
+	LIKE	this operator is used to compare a value to similar values using wildcard operator
+____________________________________________________________________________________________________________________________________________________________
+
+Are NULL values same as that of zero or a blank space? 
+
+> A NULL value is not at all same as that of zero or a blank space.
+> NULL value represents a value which is unavailable, unknown, assigned or not applicable whereas a zero is a number and blank space is a character.
+
+____________________________________________________________________________________________________________________________________________________________
+
+What is the difference between cross join and natural join?
+
+Cross Join :
+	> The CROSS JOIN is used to generate a paired combination of each row of the first table with each row of the second table. 
+	> This join type is also known as cartesian join.
+Syntax :
+SELECT ColumnName_1, 
+       ColumnName_2, 
+       ColumnName_N
+FROM [Table_1]
+     CROSS JOIN [Table_2];
+
+Natural join :
+	> A NATURAL JOIN is a JOIN operation that creates an implicit join based on the common columns in the two tables being joined.
+	> A NATURAL JOIN can be an INNER join, a LEFT OUTER join, or a RIGHT OUTER join. The default is INNER join.
+	> ON clause is not used in a natural join.
+
+Syntax :
+SELECT table1.column1, table2.column2, ......
+FROM table1 
+NATURAL [ { LEFT | RIGHT } [ OUTER ] | INNER ] JOIN table2;
+____________________________________________________________________________________________________________________________________________________________
+
+What is subquery in SQL?
+
+> A subquery is a query inside another query where a query is defined to retrieve data or information back from the database.
+> In a subquery, the outer query is called as the main query whereas the inner query is called subquery.
+> Subqueries are always executed first and the result of the subquery is passed on to the main query.
+
+Example -
+
+SELECT * 
+FROM CUSTOMERS 
+WHERE ID IN 
+(SELECT ID FROM CUSTOMERS 
+WHERE SALARY > 4500) ;
+____________________________________________________________________________________________________________________________________________________________
+
+What are the different types of a subquery?
+
+Correlated subquery: 
+	> These are queries which select the data from a table referenced in the outer query. 
+	> It is not considered as an independent query as it refers to another table and refers the column in a table.
+
+Non-Correlated subquery: 
+	> This query is an independent query where the output of subquery is substituted in the main query.
+
+____________________________________________________________________________________________________________________________________________________________
+
+List the ways to get the count of records in a table?
+
+> To count the number of records in a table, you can use the below commands:
+
+SELECT * FROM table1
+SELECT COUNT(*) FROM table1
+SELECT rows FROM sysindexes WHERE id = OBJECT_ID(table1) AND indid < 2
+____________________________________________________________________________________________________________________________________________________________
+
+Write a SQL query to find the names of employees that begin with ‘A’?
+
+> To display name of the employees that begin with ‘A’, type in the below command:
+	SELECT * FROM Table_name WHERE EmpName like 'A%'
+
+____________________________________________________________________________________________________________________________________________________________
+
+Write a SQL query to get the third highest salary of an employee from employee_table?
+
+SELECT TOP 1 salary
+FROM(
+SELECT TOP 3 salary
+FROM employee_table
+ORDER BY salary DESC) AS emp
+ORDER BY salary ASC;
+____________________________________________________________________________________________________________________________________________________________
+
+What is SELECT TOP in sql?
+
+> The SELECT TOP clause is used to specify the number of records to return.
+Example :
+SELECT TOP 3 * FROM Customers;
+____________________________________________________________________________________________________________________________________________________________
+What is the need for group functions (also called aggregate functions) in SQL? 
+
+> Group functions are mathematical functions to operate on sets of rows to give one result per set.
+	AVG, that calculates the average of the specified columns in a set of rows.
+	COUNT, calculating the number of rows in a set.
+	MAX, calculating the maximum.
+	MIN, calculating the minimum.
+	STDDEV, calculating the standard deviation.
+	SUM, calculating the sum.
+	VARIANCE, calculating the variance.
+____________________________________________________________________________________________________________________________________________________________
+
+What is a Relationship and what are they?
+
+> Relationships are defined as the connection between the tables in a database. 
+> There are various relationships, namely:	
+	1) One to One Relationship : person ---1----has----1----passport 
+	Example -
+	If there are two entities ‘Person’ (Id, Name, Age, Address)and ‘Passport’(Passport_id, Passport_no). So, each person can have only one passport and 		each passport belongs to only one person.
+
+	2) One to Many Relationship : customer ---1---has---n---account
+	Example -
+	If there are two entity type ‘Customer’ and ‘Account’ then each ‘Customer’ can have more than one ‘Account’ but each ‘Account’ is held by only one 	‘Customer’. 
+
+	3) Many to One Relationship : customer---n---buys---m---product
+	Example -
+	If there are two entity type ‘Customer’ and ‘Product’ then each customer can buy more than one product and a product can be bought by many different 	customers.
+	4) Self-Referencing Relationship :A table bears a self-referencing relationship to itself when a given record in the table is related to other 	records within the table.
+	Similar to its dual-table counterpart, a self-referencing relationship can be one-to-one, one-to-many, or many-to-many. 
+
+____________________________________________________________________________________________________________________________________________________________
+
+NULL values can be inserted in the following ways:
+
+> Implicitly by omitting column from column list.
+> Explicitly by specifying NULL keyword in the VALUES clause
+____________________________________________________________________________________________________________________________________________________________
+
+What is the main difference between ‘BETWEEN’ and ‘IN’ condition operators?
+
+> BETWEEN operator is used to display rows based on a range of values in a row 
+> IN operator is used to check for values contained in a specific set of values
+
+Example of BETWEEN:
+SELECT * FROM Students where ROLL_NO BETWEEN 10 AND 50;
+
+Example of IN:
+SELECT * FROM students where ROLL_NO IN (8,15,25);
+____________________________________________________________________________________________________________________________________________________________
+
+Why are SQL functions used?
+
+> SQL functions are used for the following purposes:
+	To perform some calculations on the data
+	To modify individual data items
+	To manipulate the output
+	To format dates and numbers
+	To convert the data types
+____________________________________________________________________________________________________________________________________________________________
+
+What is CLAUSE in SQL?
+
+> SQL clause helps to limit the result set by providing a condition to the query. A clause helps to filter the rows from the entire set of records.
+
+For example – WHERE, HAVING clause.
+____________________________________________________________________________________________________________________________________________________________
+
+What is the difference between having and where clause?
+
+WHERE 
+	> The WHERE clause is used in the selection of rows according to given conditions
+	> If GROUP BY is used then it is executed after the WHERE clause is executed in the query. 
+	> WHERE clause can be used with SELECT, UPDATE, DELETE, etc.
+	> aggregate functions can't be used  with WHERE 
+
+HAVING
+	> HAVING clause is used in column operations and is applied to aggregated rows or groups.
+	> GROUP BY is executed before the execution of the HAVING clause
+	> HAVING clause can only be used with SELECT statement 
+	> We can use aggregate functions like sum, min, max, avg, etc with the HAVING clause
+	> HAVING clause is generally used with the GROUP BY
+
+____________________________________________________________________________________________________________________________________________________________
+
+What is the need of MERGE statement?
+
+> The MERGE statement is used to make changes in one table based on values matched from anther.   It can be used to combine insert, update, and delete   operations into one statement.
+
+SYntax :
+
+MERGE <target_table> [AS TARGET]
+USING <table_source> [AS SOURCE]
+ON <search_condition>
+[WHEN MATCHED 
+   THEN <merge_matched> ]
+[WHEN NOT MATCHED [BY TARGET]
+   THEN <merge_not_matched> ]
+[WHEN NOT MATCHED BY SOURCE
+   THEN <merge_matched> ];
+
+Example :
+
+MERGE esqlProductTarget T
+USING esqlProductSource S
+ON (S.ProductID = T.ProductID)
+WHEN MATCHED 
+     THEN UPDATE
+     SET    T.Name = S.Name,
+            T.ProductNumber = S.ProductNumber,
+            T.Color = S.Color
+WHEN NOT MATCHED BY TARGET
+THEN INSERT (ProductID, Name, ProductNumber, Color)
+     VALUES (S.ProductID, S.Name, S.ProductNumber, S.Color)
+WHEN NOT MATCHED BY SOURCE
+THEN DELETE;
+____________________________________________________________________________________________________________________________________________________________
+
+What do you mean by recursive stored procedure?
+
+> Recursive stored procedure refers to a stored procedure which calls by itself until it reaches some boundary condition. 
+> This recursive function or procedure helps the programmers to use the same set of code n number of times(max 32 times).
+
+____________________________________________________________________________________________________________________________________________________________
+
+List the ways in which  Dynamic SQL can be executed?
+
+> Following are the ways in which dynamic SQL can be executed:
+
+1) Write a query with parameters.
+2) Using EXEC.
+	DECLARE @SQL nvarchar(1000)
+ 	declare @Pid varchar(50)
+	set @pid = '680'
+ 	SET @SQL = 'SELECT ProductID,Name,ProductNumber FROM SalesLT.Product where ProductID = '+ @Pid
+ 
+	EXEC (@SQL)
+
+Using sp_executesql  : 
+	> sp_executesql is an extended stored procedure
+	> we need to pass the SQL statement, define parameters and set the values to the parameters used in the query.
+Example :
+	EXECUTE sp_executesql   
+          N'SELECT ProductID,Name,ProductNumber  
+          FROM SalesLT.Product where ProductID = @Pid and ProductNumber=@PNumber',  
+          N'@Pid varchar(50),@PNumber varchar(50)',  
+          @pid = '680',@PNumber='FR-R92B-58';
+____________________________________________________________________________________________________________________________________________________________
+
+What are the various levels of constraints?
+
+> Constraints are the representation of a column to enforce data entity and consistency. There are two levels  of a constraint, namely:
+1) column level constraint
+	UNIQUE [WITH constraint_with_clause]
+	PRIMARY KEY [WITH constraint_with_clause]
+	REFERENCES [schema.]table_name[(column_name)]
+    		[WITH constraint_with_clause]
+
+2) table level constraint
+	UNIQUE (column_name {, column_name}) [WITH constraint_with_clause]
+	PRIMARY KEY (column_name {, column_name}) [WITH constraint_with_clause]
+	FOREIGN KEY (column_name {, column_name})
+	REFERENCES [schema.]table_name [(column_name {, column_name})]
+    		[WITH constraint_with_clause]
+____________________________________________________________________________________________________________________________________________________________
+
+How can you fetch common records from two tables?
+
+> You can fetch common records from two tables using INTERSECT. 
+
+For example:
+
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+
+INTERSECT
+
+SELECT column1 [, column2 ]
+FROM table1 [, table2 ]
+[WHERE condition]
+____________________________________________________________________________________________________________________________________________________________
+
+List some case manipulation functions in SQL?
+
+> There are three case manipulation functions in SQL, namely:
+
+LOWER 
+	> This function returns the string in lowercase. It takes a string as an argument and returns it by converting it into lower case. Syntax:
+ 		LOWER(‘string’)
+UPPER 
+	> This function returns the string in uppercase. It takes a string as an argument and returns it by converting it into uppercase. Syntax:
+		UPPER(‘string’)
+INITCAP
+	> This function returns the string with the first letter in uppercase and rest of the letters in lowercase. Syntax:
+ 		INITCAP(‘string’)
+____________________________________________________________________________________________________________________________________________________________
+
+What are the different set operators available in SQL?
+
+Union : This set operator is used to combine the outputs of two or more queries into a single set of rows and columns having different records.
+Intersect : This set operator is availed to retrieve the information which is common in both tables.
+Minus : This set operator is availed to retrieve the information of one table which is not available in another table.
+____________________________________________________________________________________________________________________________________________________________
+
+What is an ALIAS command?
+
+> ALIAS name can be given to any table or a column. This alias name can be referred in WHERE clause to identify a particular table or a column.
+
+Example :
+
+Select emp.empID, dept.Result from employee emp, department as dept where emp.empID=dept.empID
+____________________________________________________________________________________________________________________________________________________________
+
+What are aggregate and scalar functions?
+
+> Aggregate functions are used to evaluate mathematical calculation and returns a single value.
+	AVG() - It returns average value after calculating from values in a numeric
+			SELECT AVG(column_name) FROM table_name;
+	COUNT() - It is used to count the number of rows returned in a SELECT statement.
+			SELECT COUNT(column_name) FROM table_name;
+	FIRST() - The FIRST() function returns the first value of the selected column
+		 	SELECT FIRST(column_name) FROM table_name;
+	LAST() - The LAST() function returns the last value of the selected column. 
+			SELECT LAST(column_name) FROM table_name;
+	MAX() - The MAX() function returns the maximum value of the selected column.
+			SELECT MAX(column_name) FROM table_name;
+	MIN() - The MIN() function returns the minimum value of the selected column.
+			SELECT MIN(column_name) FROM table_name;
+	SUM() - The SUM() function returns the sum of all the values of the selected column.
+			SELECT SUM(column_name) FROM table_name;
+
+> Scalar functions return a single value based on the input value.
+	UCASE() - It converts the value of a field to uppercase.
+			SELECT UCASE(column_name) FROM table_name;
+	LCASE() - It converts the value of a field to lowercase.
+			SELECT LCASE(column_name) FROM table_name;
+	MID() - The MID() function extracts a substring from a string (starting at any position).
+			SELECT MID(column_name,start,length) AS some_name FROM table_name;
+	LEN() - The LEN() function returns the length of the value in a text field.
+			SELECT LENGTH(column_name) FROM table_name;
+	ROUND() - The ROUND() function is used to round a numeric field to the number of decimals specified
+			SELECT ROUND(column_name,decimals) FROM table_name; 
+	NOW() - The NOW() function returns the current system date and time.
+			SELECT NOW() FROM table_name;
+	FORMAT() - The FORMAT() function is used to format how a field is to be displayed.
+			SELECT FORMAT(column_name,format) FROM table_name; 
+____________________________________________________________________________________________________________________________________________________________
+
+How can you fetch alternate records from a table?
+
+> To display even numbers, use the following command:
+	select studentId from (Select rowno, studentId from student) where mod(rowno,2)=0
+  Now, to display odd numbers:
+	Select studentId from (Select rowno, studentId from student) where mod(rowno,2)=1
+____________________________________________________________________________________________________________________________________________________________
+
+Name the operator which is used in the query for pattern matching?
+
+> LIKE operator is used for pattern matching, and it can be used as :
+	% – It matches zero or more characters.
+Example :
+	select * from students where studentname like ‘a%’
+	_ (Underscore) – it matches exactly one character.
+Example :
+	select * from student where studentname like ‘abc_’
+____________________________________________________________________________________________________________________________________________________________
+
+How can you select unique records from a table?
+
+> You can select unique records from a table by using the DISTINCT keyword.	
+	Select DISTINCT studentID from Student
+____________________________________________________________________________________________________________________________________________________________
+
+How can you fetch first 5 characters of the string?
+
+> using SUBSTRING function.
+
+SELECT SUBSTRING('SQL Tutorial', 1, 2) AS ExtractString;
+
+Note: The MID() and SUBSTR() functions equals the SUBSTRING() function.
+____________________________________________________________________________________________________________________________________________________________
+
+What is the main difference between SQL and PL/SQL?
+
+SQL
+> SQL is a query language that allows you to issue a single query or execute a single insert/update/delete.
+> SQL is used to write queries, create and execute DDL and DML statments.
+
+PL/SQL 
+> PL/SQL is Oracle’s “Procedural Language” SQL, which allows you to write a full program (loops, variables, etc.) to accomplish multiple operations such as    selects/inserts/updates/deletes. 
+> PL/SQL is a block structured language that can have multiple blocks in it.
+> PL/SQL is used to write program blocks, functions, procedures, triggers and packages.
+____________________________________________________________________________________________________________________________________________________________
+
+What is a View?
+
+> A view is nothing but a SQL statement stored in the database with an associated name.
+> View is created by selecting fields from one or more tables present in the database.
+> WHERE and JOIN can be used for selecting field.
+
+Syntax :
+CREATE VIEW view_name AS
+SELECT column1, column2.....
+FROM table_name
+WHERE [condition];
+
+____________________________________________________________________________________________________________________________________________________________
+
+How can we update and delete a view?
+
+> A view can be updated with the CREATE OR REPLACE VIEW command.
+
+Syntax :
+CREATE OR REPLACE VIEW view_name AS
+SELECT column1, column2, ...
+FROM table_name
+WHERE condition;
+
+> A view is deleted with the DROP VIEW command.
+Syntax :
+DROP VIEW view_name;
+____________________________________________________________________________________________________________________________________________________________
+
+What are Views used for?
+
+> It is used for the following reasons:
+	Restricting access to data.
+	Making complex queries simple.
+	Ensuring data independence.
+	Providing different views of same data.
+____________________________________________________________________________________________________________________________________________________________
+
+What is a Stored Procedure?
+
+> A stored procedure is a set of sql statement with a name that has been created and stored in a data base.
+> All procedure by default are compiled in the database the first time its executed and maintains the execution plan(buffer pool) for subsequent calls.
+> It can be reused over and over again.
+
+Stored Procedure Syntax :
+
+CREATE PROCEDURE procedure_name
+AS
+sql_statement
+GO;
+
+Execute a Stored Procedure Syntax :
+
+EXEC procedure_name;
+
+Example ----
+
+CREATE PROCEDURE SelectAllCustomers @City nvarchar(30), @PostalCode nvarchar(10)
+AS
+SELECT * FROM Customers WHERE City = @City AND PostalCode = @PostalCode
+GO;
+
+Execute the stored procedure :
+
+EXEC SelectAllCustomers @City = 'London', @PostalCode = 'WA1 1DP';
+
+____________________________________________________________________________________________________________________________________________________________
+
+List some advantages and disadvantages of Stored Procedure?
+
+Advantages:
+	It enhance productivity
+	It is resuable
+	A procedure can call other procedures.
+
+Disadvantage:
+	It is database dependent.
+	Testing and debugging is difficult.
+____________________________________________________________________________________________________________________________________________________________
+
+What is SQL Profiler?
+
+> SQL Profiler is a graphical tool that allows system administrators to monitor events in an instance of Microsoft SQL Server. 
+> A programmer can capture and save data about each event to a file or SQL Server table to analyze later.
+
+____________________________________________________________________________________________________________________________________________________________
+
+Explain the differences between char, nvarchar and varchar in SQL Server?
+
+char: Fixed-length non-Unicode character data with length of n bytes. n must be a value from 1 through 8,000
+varchar: Variable-length non-Unicode character data with length of n bytes, n must be a value from 1 through 8,000.
+nvarchar: Variable-length Unicode character data of n characters. n must be a value from 1 through 4,000.
+
+____________________________________________________________________________________________________________________________________________________________
+
+What do you mean by Collation?
+
+> Collation is defined as a set of rules that determine how data can be sorted as well as compared.
+> Collation provides the sorting rules, case, and accent sensitivity properties for the data in the database.
+
+For example, when you run a query using the ORDER BY clause, collation determines whether or not uppercase letters and lowercase letters are treated the same.
+
+____________________________________________________________________________________________________________________________________________________________
+
+What are Global variables in sql server (Transact-SQL)?
+
+> Global variables :
+	Global variables are pre-defined system functions. 
+	Global variables names begin with an @@ prefix
+	Global variables return information about the current user environment for SQL Server. 
+
+____________________________________________________________________________________________________________________________________________________________
+
+What is Auto Increment in SQL?
+
+> Auto increment keyword allows the user to create a unique number to get generated whenever a new record is inserted into the table.
+> This keyword is usually required whenever PRIMARY KEY is used.
+
+Note :  MySQL uses the AUTO_INCREMENT keyword to perform an auto-increment feature.
+	MS SQL Server uses the IDENTITY keyword to perform an auto-increment feature.
+	In oracle SEQUENCE does the same.
+	
+____________________________________________________________________________________________________________________________________________________________
+
+What is a Datawarehouse?
+
+> Datawarehouse refers to a central repository of data where the data is assembled from multiple sources of information. 
+> Those data are consolidated, transformed and made available for the mining as well as online processing. 
+> Warehouse data also have a subset of data called Data Marts.
+____________________________________________________________________________________________________________________________________________________________
+
+What are STUFF and REPLACE function in SQL server?
+
+> STUFF Function : 
+The STUFF() function deletes a part of a string and then inserts another part into the string, starting at a specified position.
+Syntax:
+STUFF(string_expression, start, length, replacement_characters)
+
+> REPLACE function :
+The REPLACE() function replaces all occurrences of a substring within a string, with a new substring.
+Syntax:
+REPLACE(string_expression, search_string, replacement_string)
+
+____________________________________________________________________________________________________________________________________________________________
+
+List all the types of user-defined functions?
+
+> There are three types of user-defined functions, namely:
+Scalar Functions
+Inline Table-valued functions
+Multi-statement valued functions
+
+____________________________________________________________________________________________________________________________________________________________
+
+What is sql injection?
+
+> SQL injection is a code injection technique that might destroy your database.
+> SQL injection is one of the most common web hacking techniques.
+____________________________________________________________________________________________________________________________________________________________
+
+What is the difference between /, ‘=’ and ‘LIKE’?
+
+> LIKE allows partial matching / use of wildcards, while = checks for exact matches
+____________________________________________________________________________________________________________________________________________________________
+
+What is the difference between a ‘TINYINT’, an ‘INT’ and a ‘BIGINT’ in SQL Server?
+
+> 'INT' will use 4 bytes but a 'BIGINT' will use 8 bytes, while a 'TINYINT' will use 1 byte
+____________________________________________________________________________________________________________________________________________________________
+
+RAW datatype in Oracle
+
+> The RAW datatype in Oracle is used to store variable-length binary data or byte string values. 
+> The maximum size for a raw in a given table in 32767 bytes(=32.7 kb)
+____________________________________________________________________________________________________________________________________________________________
+
+Explain Temporal data types in Oracle?
+
+> Oracle mainly provides these following temporal data types:
+
+Date		: Different formats of Dates.
+TimeStamp	: Has different formats of Time Stamp.
+Interval	: Interval between dates and time.
+____________________________________________________________________________________________________________________________________________________________
+
+How to store pictures on to the database?
+
+> It is possible to store pictures on to the database by using Long Raw Data type. 
+> This data type is used to store binary data of length 2GB.
+
+____________________________________________________________________________________________________________________________________________________________
+
+What is the data type of DUAL table?
+
+The Dual table is basically a one-column table that is present in the Oracle database. This table has a single Varchar2(1) column called Dummy which has a value of ‘X’.
+
+List Guidelines to use subqueries
+
+> Guidelines for using subqueries:
+	A subquery can be placed in where having and from clause.
+	You should enclose the sub-queries within parenthesis.
+	Place these subqueries on the right side of the comparison condition.
+	Use Single-row operators with single-row subqueries.
+	Use Multiple-row operators with multiple-row subqueries.
+____________________________________________________________________________________________________________________________________________________________
+
+Name the various constraints used in Oracle?
+
+> These are the following constraints used:
+
+NULL: It is to indicate that a particular column can contain NULL values.
+NOT NULL: It is to indicate that particular column cannot contain NULL values.
+CHECK: Validate that values in the given column to meet the specific criteria.
+DEFAULT: It is to indicate the value is assigned to a default value.
+____________________________________________________________________________________________________________________________________________________________
+
+What are the uses of a database trigger
+
+> Triggers are the programs which are automatically executed when some events occur:
+	Implement complex security authorizations.
+	Drive column values.
+	Maintain duplicate tables.
+	Implement complex business rules.
+____________________________________________________________________________________________________________________________________________________________
+
+What is the difference between SQL and MySQL?
+
+SQL
+> SQL is a standard language which stands for Structured Query Language based on the English language
+> SQL is the core of the relational database which is used for accessing and managing database
+
+MySQL
+> MySQL is an RDMS (Relational Database Management System) such as ms SQL Server, Informix etc.
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Querying data - 
+
+1) SELECT statement to query data from a one or more table.
+syntax	:
+SELECT
+  column_1, 
+  column_2, 
+  ...
+FROM
+  table_name;
+____________________________________________________________________________________________________________________________________________________________
+
+Sorting data -
+
+1) ORDER BY is for sorting data in ascending & descending order. ORDER BY clause is always the last clause in a SELECT statement
+syntax	:
+SELECT
+    column_1,
+    column_2,
+    ...
+FROM
+    table_name
+ORDER BY
+    column_1 [ASC | DESC] [NULLS FIRST | NULLS LAST];
+
+> ASC is default. 
+> NULLS FIRST | NULLS LAST is to order null value position.
+
+____________________________________________________________________________________________________________________________________________________________
+
+Filtering data -
+
+1) DISTINCT clause ensures that rows returned are unique for the column or columns specified in the SELECT clause.
+syntax	:
+SELECT
+    DISTINCT column_1,
+    column_2,
+    column_3
+FROM
+    table_name;
+-------------------------------------------------------------------
+
+2) WHERE clause specifies a search condition for rows returned by the SELECT statement.
+syntax	:
+SELECT
+    select_list
+FROM
+    table_name
+WHERE
+    expression_1 AND expression_2
+ORDER BY
+   sort_expression;
+-------------------------------------------------------------------
+
+3) AND clause return output when both contions satisfy.
+
+-------------------------------------------------------------------
+
+4) OR clause return output when any one contions satisfy.
+example	:
+SELECT
+    order_id,
+    customer_id,
+    status,
+    order_date
+FROM
+    orders
+WHERE
+    status = 'Pending'
+    OR status = 'Canceled'
+ORDER BY
+    order_date DESC;
+
+-------------------------------------------------------------------
+
+5) FETCH clause is to limit the numer of output rows.
+example :
+SELECT
+    product_name,
+    quantity
+FROM
+    inventories
+INNER JOIN products
+        USING(product_id)
+ORDER BY
+    quantity DESC 
+FETCH NEXT 10 ROWS ONLY;			#first 10 rows
+
+SELECT
+    product_name,
+    quantity
+FROM
+    inventories
+INNER JOIN products
+        USING(product_id)
+ORDER BY
+    quantity DESC
+FETCH FIRST 5 PERCENT ROWS ONLY;		#first 5 percentage of rows
+
+-------------------------------------------------------------------
+
+6) IN operator is used in where clause to determine whether values in a column matches any value in a list or a subquery.
+
+example :
+SELECT
+    order_id,
+    customer_id,
+    status,
+    salesman_id
+FROM
+    orders
+WHERE
+    status IN(					#NOT IN can also be used.
+        'Pending',
+        'Canceled'
+    )
+ORDER BY
+    order_id;
+
+SELECT
+    employee_id,
+    first_name,
+    last_name
+FROM
+    employees
+WHERE
+    employee_id IN(
+        SELECT
+            DISTINCT salesman_id
+        FROM
+            orders
+        WHERE
+            status = 'Canceled'
+    );
+ORDER BY
+    first_Name;
+
+-------------------------------------------------------------------
+
+7) BETWEEN operator is used in where clause to determine whether values in a column are in a specified range.
+
+example	:
+SELECT
+    product_name,
+    standard_cost
+FROM
+    products
+WHERE
+    standard_cost BETWEEN 500 AND 600
+ORDER BY
+    standard_cost;
+
+-------------------------------------------------------------------
+
+8) LIKE operator is used in where clause to test whether values in a column match a specified pattern.
+example	:
+SELECT
+    first_name,
+    last_name,
+    phone
+FROM
+    contacts
+WHERE
+    last_name LIKE 'S_t%'		#percentage(%) - any string of zero or more character. _ (underscore) - any single character.
+ORDER BY
+    last_name;
+-------------------------------------------------------------------
+
+9) IS NULL and IS NOT NULL operators is used in where clause to check if a value in a column or an expression is NULL or not.
+example	:
+SELECT * FROM orders 
+WHERE salesman_id IS NULL
+ORDER BY order_date DESC;
+____________________________________________________________________________________________________________________________________________________________
+
+Grouping data	-
+
+1) GROUP BY clause to group rows into groups with with aggregate functions such as AVG(), COUNT(), MAX(), MIN() and SUM().
+
+example	:
+SELECT
+    customer_id,
+    COUNT( order_id )
+FROM
+    orders
+GROUP BY
+    customer_id
+ORDER BY
+    customer_id;
+____________________________________________________________________________________________________________________________________________________________
+
+Data definition language(DDL) -
+
+1) CREATE Statement is to create a table or a database in RDBMS.
+syntax	:
+CREATE DATABASE databasename;
+CREATE TABLE schema_name.table_name (
+    column_1 data_type column_constraint,
+    column_2 data_type column_constraint,
+    ...
+    table_constraint
+ );
+
+example	:
+CREATE TABLE siebel.persons(
+    person_id NUMBER GENERATED BY DEFAULT AS IDENTITY,
+    first_name VARCHAR2(50) NOT NULL,
+    last_name VARCHAR2(50) NOT NULL,
+    PRIMARY KEY(person_id)
+);
+
+> IDENTITY column is used to uniquely identify the row. 
+> Value in identity column is created by server automatically.
+
+column_name datatype GENERATED ALWAYS AS IDENTITY						#always generates a unique value. Can't insert manually.	
+column_name datatype GENERATED BY DEFAULT AS IDENTITY						#if value not provided then server generates a value.
+column_name datatype GENERATED BY DEFAULT ON NULL AS IDENTITY					#if value not provided or NULL value provided.
+column_name datatype GENERATED BY DEFAULT ON NULL AS IDENTITY START WITH 100
+column_name datatype GENERATED BY DEFAULT ON NULL AS IDENTITY START WITH 10 INCREMENT BY 10
+
+-------------------------------------------------------------------
+
+2) ALTER TABLE statement is to add columns, delete columns, or modify constraint in an existing table.
+syntax	:
+ALTER TABLE table_name
+ADD column_name type constraint;
+
+ALTER TABLE table_name
+DROP COLUMN column_name;
+
+ALTER TABLE table_name
+MODIFY column_name type constraint;
+
+> For multiple column
+
+ALTER TABLE table_name
+ADD (
+    column_name type constraint,
+    column_name type constraint,
+    ...);
+
+ALTER TABLE table_name
+MODIFY ( column_1 type constraint,
+         column_1 type constraint,
+         ...);
+
+ALTER TABLE table_name 
+DROP (column_1,column_2,...);
+
+> SET UNUSED COLUMN is used to logically drop the column, that column is no longer visible for accessing.
+syntax	:
+ALTER TABLE table_name 
+SET UNUSED COLUMN column_name;
+
+-------------------------------------------------------------------
+
+3) DROP TABLE is used to remove an existing table.
+
+syntax:
+DROP TABLE schema_name.table_name;
+
+DROP TABLE schema_name.table_name CASCADE CONSTRAINTS;			#to delete table and also the foreign key constraint from other table.
+
+DROP TABLE schema_name.table_name					#PURGE clause is to release the space associated with it at once.
+
+-------------------------------------------------------------------
+
+4) TRUNCATE TABLE statement is to delete all rows from a table faster and more efficiently.
+syntax	:
+TRUNCATE TABLE schema_name.table_name;
+
+TRUNCATE TABLE schema_name.table_name CASCADE;				#truncates down table table_name and the associated tables in the chain.
+
+5) RENAME statement is to rename an existing table in the database.
+
+syntax	:
+RENAME table_name TO new_name;
+
+____________________________________________________________________________________________________________________________________________________________
+
+Data Manipulation Language(DML)
+
+1) INSERT INTO statement is to insert data into a table.
+syntax	:
+INSERT INTO table_name (column_list)
+VALUES( value_list);
+
+> INSERT INTO SELECT statement to insert data into a table from the result of SELECT statement.
+syntax	:
+INSERT INTO target_table (col1, col2, col3)
+SELECT col1,
+       col2,
+       col3
+FROM source_table
+WHERE condition;
+
+example	:
+INSERT INTO discounts(discount_name, amount, start_date, expired_date)
+VALUES('Summer Promotion', 9.5, DATE '2017-05-01', DATE '2017-08-31');
+
+-------------------------------------------------------------------
+
+2) UPDATE statement is to changes existing values in a table.
+syntax	:
+UPDATE
+    table_name
+SET
+    column1 = value1,
+    column2 = value2,
+    ...
+WHERE
+    condition;
+
+example	:
+UPDATE
+    parts
+SET
+    cost = cost * 1.25
+WHERE
+    part_id = 1;
+
+-------------------------------------------------------------------
+
+3) DELETE statement is to delete one or more rows from a table.
+
+syntax :
+DELETE
+FROM
+    table_name
+WHERE
+    condition;
+
+DELETE FROM sales;					#to delete all rows but it works slower compared to TRUNCATE statement.
+
+example	:
+DELETE
+FROM
+    sales
+WHERE
+    order_id = 1
+    AND item_id = 1;
+
+-------------------------------------------------------------------
+
+4) MERGE statement is to combine multiple INSERT, UPDATE, and DELETE statements in a single operation.
+
+syntax :
+MERGE INTO target_table 
+USING source_table 
+ON search_condition
+    WHEN MATCHED THEN
+        UPDATE SET col1 = value1, col2 = value2,...
+        WHERE <update_condition>
+        [DELETE WHERE <delete_condition>]
+    WHEN NOT MATCHED THEN
+        INSERT (col1,col2,...)
+        values(value1,value2,...)
+        WHERE <insert_condition>;
+
+Example :
+
+MERGE INTO member_staging x
+USING (SELECT member_id, first_name, last_name, rank FROM members) y
+ON (x.member_id  = y.member_id)
+WHEN MATCHED THEN
+    UPDATE SET x.first_name = y.first_name, 
+                        x.last_name = y.last_name, 
+                        x.rank = y.rank
+    WHERE x.first_name <> y.first_name OR 
+           x.last_name <> y.last_name OR 
+           x.rank <> y.rank 
+WHEN NOT MATCHED THEN
+    INSERT(x.member_id, x.first_name, x.last_name, x.rank)  
+    VALUES(y.member_id, y.first_name, y.last_name, y.rank);
+
+
+-------------------------------------------------------------------
+
+EXIST - The result of EXISTS is a boolean value True or False. It can be used in a SELECT, UPDATE, INSERT or DELETE statement.
+
+syntax :
+SELECT column_name(s) 
+FROM table_name
+WHERE EXISTS 
+  (SELECT column_name(s) 
+   FROM table_name
+   WHERE condition);
+
+Example :
+
+SELECT fname, lname 
+FROM Customers 
+WHERE EXISTS (SELECT * 
+              FROM Orders 
+              WHERE Customers.customer_id = Orders.c_id);
+
+SELECT lname, fname
+FROM Customer
+WHERE NOT EXISTS (SELECT * 
+                  FROM Orders 
+                  WHERE Customers.customer_id = Orders.c_id);
+
+DELETE 
+FROM Orders
+WHERE EXISTS (SELECT *
+              FROM customers
+              WHERE Customers.customer_id = Orders.cid
+              AND Customers.lname = 'Mehra');
+
+UPDATE Customers
+SET lname = 'Kumari'
+WHERE EXISTS (SELECT *
+              FROM Customers
+              WHERE customer_id = 401);
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+
+Table – EmployeeDetails
+
+EmpId	FullName	ManagerId	DateOfJoining	City
+121	John Snow	321		01/31/2014	Toronto
+321	Walter White	986		01/30/2015	California
+421	Kuldeep Rana	876		27/11/2016	New Delhi
+192	John Snow	321		01/31/2014	Toronto
+
+
+
+
+___________________________________________________________________________
+
+Table – EmployeeSalary
+
+EmpId	Project	Salary	Variable
+121	P1	8000	500
+321	P2	10000	1000
+421	P1	12000	0
+122	P4	84000	500
+326	P3	12000	1000
+621	P5	120	0
+
+___________________________________________________________________________
+
+
+1) Write an SQL query to fetch the EmpId and FullName of all the employees working under Manager with id – ‘986’.
+
+SELECT  EmpId, FullName
+FROM EmployeeDetails
+WHERE ManagerId = 986;
+
+2) Write an SQL query to fetch the different projects available from the EmployeeSalary table.
+
+SELECT DISTINCT(Project)
+FROM EmployeeSalary;
+
+3) Write an SQL query to fetch the count of employees working in project ‘P1’.
+
+SELECT COUNT(*) 
+FROM EmployeeSalary 
+WHERE Project = 'P1';
+
+4) Write an SQL query to find the maximum, minimum, and average salary of the employees.
+
+SELECT Max(Salary), 
+Min(Salary), 
+AVG(Salary) 
+FROM EmployeeSalary;
+
+5) Write an SQL query to find the employee id whose salary lies in the range of 9000 and 15000.
+
+SELECT EmpId, Salary
+FROM EmployeeSalary
+WHERE Salary BETWEEN 9000 AND 15000;
+
+6) Write an SQL query to fetch those employees who live in Toronto and work under manager with ManagerId – 321.
+
+SELECT EmpId, City, ManagerId
+FROM EmployeeDetails
+WHERE City='Toronto' AND ManagerId='321';
+
+7) Write an SQL query to fetch all the employees who either live in California or work under a manager with ManagerId – 321.
+
+SELECT EmpId, City, ManagerId
+FROM EmployeeDetails
+WHERE City='California' OR ManagerId='321';
+
+8) Write an SQL query to fetch all those employees who work on Project other than P1.
+
+SELECT EmpId
+FROM EmployeeSalary
+WHERE NOT Project='P1';
+
+SELECT EmpId
+FROM EmployeeSalary
+WHERE Project NOT in ('P1');
+
+SELECT EmpId
+FROM EmployeeSalary
+WHERE Project <> 'P1';
+
+9) Write an SQL query to display the total salary of each employee adding the Salary with Variable value.
+
+SELECT EmpId,
+Salary+Variable as TotalSalary 
+FROM EmployeeSalary;
+
+10) Write an SQL query to fetch the employees whose name begins with any two characters, followed by a text “hn” and ending with any sequence of characters.
+
+SELECT FullName
+FROM EmployeeDetails
+WHERE FullName LIKE ‘__hn%’;
+
+11) Write an SQL query to fetch all the EmpIds which are present in either of the tables – ‘EmployeeDetails’ and ‘EmployeeSalary’.
+
+SELECT EmpId FROM EmployeeDetails
+UNION 
+SELECT EmpId FROM EmployeeSalary;
+
+12) Write an SQL query to fetch common EmpIds between two tables.
+
+SELECT EmpId FROM EmployeeSalary
+INTERSECT
+SELECT EmpId FROM ManagerSalary;
+
+SELECT EmpId 
+FROM EmployeeSalary
+WHERE EmpId IN 
+(SELECT EmpId from ManagerSalary);
+
+13) Write an SQL query to fetch records that are present in one table but not in another table.
+
+SELECT EmpId FROM EmployeeSalary
+MINUS
+SELECT EmpId FROM ManagerSalary;
+
+SELECT EmployeeSalary.*
+FROM EmployeeSalary
+LEFT JOIN
+ManagerSalary USING (EmpId)
+WHERE ManagerSalary.EmpId IS NULL;
+
+14) Write an SQL query to fetch the EmpIds that are present in EmployeeDetails but not in EmployeeSalary.
+
+SELECT EmpId FROM 
+EmployeeDetails 
+where EmpId Not IN 
+(SELECT EmpId FROM EmployeeSalary);
+
+15)  Write an SQL query to fetch the employee full names and replace the space with ‘-’.
+
+SELECT REPLACE(FullName, ' ', '-')  				#REPLACE( string1, string_to_replace [, replacement_string] )				
+FROM EmployeeDetails;
+
+16) Write an SQL query to fetch the position of a given character(s) in a field.
+
+SELECT INSTR(FullName, 'Snow')					#SQL Server INSTR( string, substring [, start_position [, th_appearance ] ] )
+FROM EmployeeDetails;
+
+17) Write a query to fetch only the first name(string before space) from the FullName column of the EmployeeDetails table.
+
+SELECT SUBSTRING(FullName, 1, CHARINDEX(' ',FullName)) 		#SUBSTRING(string, start, length)
+FROM EmployeeDetails;
+
+
+18) Write an SQL query to upper case the name of the employee and lower case the city values.
+
+SELECT UPPER(FullName), LOWER(City) 
+FROM EmployeeDetails;
+
+19) Write an SQL query to find the count of the total occurrences of a particular character – ‘n’ in the FullName field.
+
+SELECT FullName, 
+LENGTH(FullName) - LENGTH(REPLACE(FullName, 'n', ''))
+FROM EmployeeDetails;
+
+20) Write an SQL query to update the employee names by removing leading and trailing spaces.
+
+UPDATE EmployeeDetails 
+SET FullName = LTRIM(RTRIM(FullName));
+
+21) Fetch all the employees who are not working on any project.
+
+SELECT EmpId 
+FROM EmployeeSalary 
+WHERE Project IS NULL;
+
+22) Write an SQL query to fetch employee names having a salary greater than or equal to 5000 and less than or equal to 10000.
+
+SELECT FullName 
+FROM EmployeeDetails 
+WHERE EmpId IN 
+(SELECT EmpId FROM EmployeeSalary 
+WHERE Salary BETWEEN 5000 AND 10000);
+
+23) Write an SQL query to find the current date-time.
+
+SELECT SYSDATE FROM DUAL;
+
+24) Write an SQL query to fetch all the Employees details from EmployeeDetails table who joined in the Year 2020.
+
+SELECT * FROM EmployeeDetails
+WHERE DateOfJoining BETWEEN '2020/01/01'
+AND '2020/12/31';
+
+SELECT * FROM EmployeeDetails 
+WHERE YEAR(DateOfJoining) = '2020';
+
+25) Write an SQL query to fetch all employee records from EmployeeDetails table who have a salary record in EmployeeSalary table.
+
+SELECT * FROM EmployeeDetails E
+WHERE EXISTS
+(SELECT * FROM EmployeeSalary S 
+WHERE  E.EmpId = S.EmpId);
+
+NOTE : If the subquery returns at least one record in its result set, the EXISTS clause will evaluate to true and the EXISTS condition will be met. If the subquery does not return any records, the EXISTS clause will evaluate to false and the EXISTS condition will not be met.
+
+26) Write an SQL query to fetch project-wise count of employees sorted by project’s count in descending order.
+
+SELECT Project, count(EmpId) as "EmpProjectCount"
+FROM EmployeeSalary
+GROUP BY Project
+ORDER BY EmpProjectCount DESC;
+
+
+27) Write a query to fetch employee names and salary records. Display the employee details even if the salary record is not present for the employee.
+
+SELECT E.FullName, S.Salary 
+FROM EmployeeDetails E 
+LEFT JOIN 
+EmployeeSalary S
+ON E.EmpId = S.EmpId;
+
+28) Write an SQL query to fetch all the Employees who are also managers from the EmployeeDetails table.
+
+SELECT DISTINCT E.FullName
+FROM EmployeeDetails E
+INNER JOIN EmployeeDetails M
+ON E.EmpID = M.ManagerID;
+
+29) Write an SQL query to fetch duplicate records from EmployeeDetails (without considering the primary key – EmpId).
+
+SELECT EmpId, FullName, ManagerId, DateOfJoining, City, COUNT(1)
+FROM EmployeeDetails
+GROUP BY EmpId, FullName, ManagerId, DateOfJoining, City
+HAVING COUNT(*) > 1;
+
+30) Write an SQL query to remove duplicates from a table without using a temporary table.
+
+DELETE e1 FROM EmployeeDetails e1, EmployeeDetails e2 	#Note - only those unique rows will be retained where FullName is unique and EmpId field is lowest.
+WHERE E1.EmpId > E2.EmpId
+AND E1.FullName = E2.FullName 
+AND E1.ManagerId = E2.ManagerId
+AND E1.DateOfJoining = E2.DateOfJoining
+AND E1.City = E2.City;
+
+DELETE FROM EmployeeDetails 
+WHERE FullName IN (SELECT FullName FROM EmployeeDetails  GROUP BY FullName HAVING COUNT(*) > 1)
+AND NOT id IN (SELECT min(EmpId) FROM EmployeeDetails GROUP BY FullName)
+
+31) Write an SQL query to fetch only odd rows from the table.
+
+SELECT * FROM EmployeeDetails 
+WHERE MOD (EmpId, 2) <> 0;
+
+select * from (select *, rownum rn from EmployeeDetails) E where MOD (rn, 2) <> 0;
+
+32) Write an SQL query to fetch only even rows from the table.
+
+SELECT * FROM EmployeeDetails 
+WHERE MOD(EmpId, 2) = 0;
+
+select * from (select *, rownum rn from EmployeeDetails) E where MOD (rn, 2) = 0;
+
+33) Write an SQL query to create a new table with data and structure copied from another table.
+
+CREATE TABLE NewTable 
+SELECT * FROM EmployeeSalary;
+
+34) Write an SQL query to create an empty table with the same structure as some other table.
+
+Here, we can use the same query as above with False ‘WHERE’ condition-
+
+CREATE TABLE NewTable 
+SELECT * FROM EmployeeSalary where 1=0;
+
+35) Write an SQL query to fetch top n records?
+
+SELECT *
+FROM EmployeeSalary
+ORDER BY Salary DESC 
+LIMIT N;
+
+SELECT TOP N *
+FROM EmployeeSalary
+ORDER BY Salary DESC;
+
+SELECT *
+FROM EmployeeSalary
+ORDER BY Salary DESC 
+FETCH FIRST 10 ROWS ONLY;
+
+36) Write an SQL query to find the nth highest salary from table.
+
+
+select min(salary) 
+from EmployeeSalary 
+where salary in (select distinct salary from EmployeeSalary order by Salary DESC limit N)
+
+select salary 
+from EmployeeSalary 
+where salary in (select distinct salary from EmployeeSalary order by Salary DESC limit N)
+order by Salary asc
+limit 1;
+
+
+37) Write SQL query to find the 3rd highest salary from a table without using the TOP/limit keyword.
+
+SELECT Salary
+FROM EmployeeSalary Emp1
+WHERE 2 = (select count(distinct ( Emp2.Salary )) from EmployeeSalary Emp2 where Emp2.Salary > Emp1.Salary)
+
+--For nth highest salary
+
+SELECT Salary
+FROM EmployeeSalary Emp1
+WHERE N-1 = (
+                SELECT COUNT( DISTINCT ( Emp2.Salary ) )
+                FROM EmployeeSalary Emp2
+                WHERE Emp2.Salary > Emp1.Salary
+            )
+
+
+
+
+
+
+

@@ -1,0 +1,312 @@
+#Bit - Binary digit. smallest increment of data on a computer. A bit can hold only one of two values: 0 or 1
+#Byte - The basic unit to measure computer storage and processing. 1 Byte encode a character from the ASCII character set. 1 Byte = 8 bit. Byte > KB > MB > GB > TB
+#Encoding - Way to represent a character in binary digits. An encoding must follow a specific character set. character set - ASCII, Unicode (UTF-8, UTF-16, UTF-32) 
+#Fixed-Width encoding - ASCII (7 bits or 1 bytes), UTF-32(32 bits or 4 bytes)
+#Variable-Width encoding - UTF-8(8 bit to 32 bit) , UTF-16 (16 bit to 32 bit)
+#Hard Drive - A hard drive is basically the computer’s storage. Standard Interface used to connect hard drives to computer system - Parallel ATA (IDE/EIDE), serial ATA(SATA)
+#Small Computer System Interface (SCSI) - Standard Interface for physically connecting and transferring data between computers and peripheral devices.
+#HDD VS SDD - Hard disk drive spinning disks consume more power compare to solid-state drive.Data access is much faster in SSD compare to HDD.
+#Drive is a physical block disk. For example: /dev/sda
+#Partition is the futher division of drive into logical block.
+#Once partition is formatted & mounted is called volumes.
+#Filesystem is a method and data structure that decides how data is stored and retrieved.
+#CPU is given to tasks in time slices. iostat
+#Vertical scaling refers to adding more resources (CPU/RAM/DISK) to your server (database or application server is still remains one) as on demand.
+#Horizontal Scaling means adding more nodes(or physical machine) to your server or database.
+#IP address is an identifier for a computer or device on a TCP/IP network and its unique for each device and no two devices can have same IP address.
+#Hostname is a domain name assigned to a host computer. It's much easier to remember than an IP address. Two devices can have same hostname.
+#Port is a logical entity which acts as a entrypoint of communication to identify a given application or process. 
+#Some network protocal DNS:53, ssh:22, tcp/udp:922, http:80, https:443, ftp:21, smtp :25 587, telnet :23, LDAP :389(secured 636), webserver : 8080
+#Service is a process or group of processes(commonly known as daemons) running continuously in the background to serve some functionality, waiting for requests to come in.
+#SSL certificates are what enable websites to move from HTTP to HTTPS, which is more secure. SSL enable verification, encryption of web traffic.
+#SSL certificate includes domain name, Associated subdomains, certificate authority details, Issue & Expiration date, The public key (the private key is kept secret).
+#Proxy server are intermediary server separating end-user clients from the destinations they browse. Proxy server translates traffic between networks or protocols. 
+#Proxy server provide load balancing, privacy, or security and also masking the true origin of the request to the resource server.
+#Reverse proxy server is a type of proxy server that typically sits behind the firewall in a private network and receives all the requests before they reach to destination server.
+#Firewall monitors incoming and outgoing traffic and decide whether to allow or block specific traffic based on defined security rules.
+#Linux is an Open-Source OS which is combination of GNU softtware/utilities & Linux kernel.Intorduced by Linus Torvalds.
+#GNU stands for “GNU's Not Unix”.
+#Kernel is low level system software,Communicate with system hardware & provide user interface.
+#Shell is a Command Line Interpreter that takes commands from the keyboard and passes them to the kernel for performing.
+#LILO is linux boot loader provides fast boot of os. GRUB & ELILO is a famous alternative used by many distribution.
+#Swap space in Linux is used when the amount of physical memory (RAM) is full. When RAM is full, inactive pages in memory are moved to the swap space
+#Component of Linux os -  Kernel, Shell, GUI, System utilities, Application software.
+#Minimun 2 disc partition requires for linux OS - one for filesystem, os, files other one for swap memory.
+#Types of shell - Bourne shell, Bourne again shell, Korn shell, C shell, Z shell, fish shell
+#$ prompt for other user whereas # prompt for root user.
+#/dev/null is null device file. Whatever you write to “/dev/null” is discarded.
+#types of process - Waiting (S, D), running(R), completed(T), Zombie(Z). ps -aux
+#deamon job is a background job which runs free of user control. It take request, fulfill it and again wait for the another request.
+#init is deamon which is the first process of the Linux system. init.d is configuration directory for init deamon service.
+#system calls are used by application to communicate with kernal. fork()-to create a new process, exec()-to execute a new program, wait()- to wait until the process finishes execution, exit() - to exit from the process
+#types of filesystem : Ext4, XFS, nfs, temfs, ntfs, swap
+#'dmesg' generates kernel log messages.
+____________________________________________________________________________________________________________________________________________________________
+
+Explain Top command output?
+
+#line 1	- since when machine has been running, the number of people logged in and Load average for the past one, five, and 15 minutes.
+#line 2 - shows the number of tasks and their states: running, stopped, sleeping, or zombie.
+#line 3 - displays the central processing unit (CPU) values. i.e. 
+		us - Amount of time the CPU spends executing processes for people in “user space.”
+		sy - Amount of time the CPU spends running system “kernel space” processes
+		ni - Amount of time the CPU spends executing processes with a manually set nice value.
+		id - Amount of CPU idle time.
+		wa - Amount of time the CPU spends waiting for I/O to complete.
+		hi - Amount of time the CPU spends servicing hardware interrupts
+		si - Amount of time the CPU spends servicing software interrupts
+		si - Amount of time the CPU spends due to running virtual machines (“steal time”)
+#line 4 - shows total amount (in KB) of physical memory, and how much is free, used, and buffered or cached.
+#line 5 - shows total amount (also in KB) of swap memory, and how much is free, used, and available.
+#Next Lines shows PID, USER, S - Status of the process, NI - The nice value of the process, VIRT - virtual memory, SHR - Shared Memory, RES - resident memory, %MEM - Physical memory,%CPU - CPU time used by the process, COMMAND: The command name.
+____________________________________________________________________________________________________________________________________________________________
+
+What file is used during login on Linux?
+
+step 1 > /etc/passwd						#User account information.Login name and shell is looked up in a file. also /etc/shadow to crack encrypted password. 
+step 2 > /etc/profile or /etc/bash.bashrc			#Linux system wide environment and other startup scripts. It is used by all users with bash, ksh, sh shell.
+step 3 > .profile or .bash_profile, .bash_login, .profile  	#user-specific files. For non login shell .bashrc is executed instead of .bash_profile. When you type username and password
+								via console, either sitting at the machine, or remotely via ssh: .bash_profile is executed to configure your shell.
+____________________________________________________________________________________________________________________________________________________________
+
+Difference between hard link and soft(symbolic) link.
+
+Hard Link -
+Hard link acts as a copy (mirrored) of the selected file.
+If the original file is deleted, the hard link to the file will still contain the data of that file.
+Hard link assigned to the same Inode value as the original.
+Cannot create a hard link for a directory
+It cannot be used across file systems.
+
+ln <file> <Hard link name>
+
+Soft Link
+A soft link acts as a shortcut to the file name. It contains the path for original file and not the contents
+If the original file is deleted, the soft linked file will not work correctly (called hanging link).
+Soft link has separate Inode value.
+can reate a soft link for a files as well as directory.
+It can be used across file systems.
+
+ln -s <file or folder> <Soft link name>
+____________________________________________________________________________________________________________________________________________________________
+
+Linux command to set default permission to newly created files and folder?
+
+umask is the linux command used to set default permission to newly created files and folder. configured at /etc/profile or /etc/bash.bashrc
+umask is the value that is subtracted from the 666 (rw-rw-rw-) permissions when creating new files, or from 777 (rwxrwxrwx) when creating new directories. 022
+is default umask value. default permission for file - 644 & directory - 755
+commands ---
+
+#umask is the linux command used to set default permission to newly created files and folder.
+umask					#display umask value
+umask 044             			#to set umask. result in 622 default permission to file & 733 default permission to folder.
+cd $HOME/.bashrc | vi .bashrc		#to change it for specific user. 
+____________________________________________________________________________________________________________________________________________________________
+
+How can you get substring in linux?
+
+If $STR is the string. Then
+1) using cut command.
+SUBSTR=$(echo $STR | cut -c 3-11)
+2) using bash string slicing
+SUBSTR=${STR:StartIndex:LengthOfSubstring}
+____________________________________________________________________________________________________________________________________________________________
+
+How will you delete a file which has special characters in its file name?
+
+STEP 1 : get the inode number of files. ls -li
+STEP 2 : run find command with exec. find . -inum 9966571 -exec rm -i {} \;
+____________________________________________________________________________________________________________________________________________________________
+
+write a function which substitute particular index of a string with special character.(Amdocs)
+
+#!/bin/bash
+string_index(){
+string=$1
+index1=$2
+index2=`echo $index1 + 1 | bc`
+string1=${string:0:$index1}
+replacement='*'
+string2=${string:$index2}
+echo $string1$replacement$string2 
+}
+
+OR
+
+#!/bin/bash
+string_index(){
+string=$1
+index1=$2
+index2=`echo $index1 + 2 | bc`
+string1=$(echo $string | cut -c -$index1)
+string2=$(echo $string | cut -c $index2-)
+replacement='*'
+echo $string1$replacement$string2
+}
+
+string_index "hello world rahul singh" 11
+____________________________________________________________________________________________________________________________________________________________
+
+Script to swap two number varibale without using third variable.
+
+#!/bin/bash
+
+echo "Enter first variable : "
+read var1
+echo "Enter second variable : "
+read var2
+var1=`expr $var1 + $var2`
+var2=`expr $var1 - $var2`
+var1=`expr $var1 - $var2`
+echo "var1=$var1"
+echo "var2=$var2"
+____________________________________________________________________________________________________________________________________________________________
+
+How to limit the access to a user in linux?
+
+We can limit users access to linux system using restricted shell i.e rbash
+
+#login with root user or sudo access
+#Edit default shell as resricted shell for the user.
+ln -s /bin/bash /bin/rbash or cp /bin/bash /bin/rbash
+useradd -s /bin/rbash <user_name>
+usermod -s /bin/rbash <user_name>
+
+#edit .bash_profile and set PATH variable to $HOME/bin. So it look for executable only in $HOME/bin path.
+mkdir $HOME/bin								#Make bin folder in $HOME directory
+vi $HOME/.bash_profile							#Modify the PATH variable to PATH=$HOME/bin
+
+#create link for commands the user can run.
+ln -s /bin/date $HOME/bin/date
+ln -s /bin/ls $HOME/bin/ls
+ln -s /bin/mkdir $HOME/bin/mkdir
+ln -s /bin/ping $HOME/bin/ping
+
+Now login with user id and verify.
+____________________________________________________________________________________________________________________________________________________________
+
+What are the different types of variables used in Shell Script?
+
+> Environment variables - Environment variables are set when we open a new shell session.
+> Shell(local) variables - Variables that affect only the current shell. Defined by the user.
+____________________________________________________________________________________________________________________________________________________________
+
+What is the significance of the Shebang line in Shell Scripting?
+
+> Shebang is nothing but the absolute path to the shell interpreter.
+> The Shebang line is present at the top of the script.
+
+Bourne shell (sh)    		---------    #!/bin/sh
+Korn shell (ksh)    		---------    #!/bin/ksh
+Bourne Again shell (bash)    	---------    #!/bin/bash
+c shell (csh)			---------    #!/bin/csh
+____________________________________________________________________________________________________________________________________________________________
+
+What is Internal Field Separator(IFS)?
+
+It determines what are the word boundaries in a given line. The default value of IFS is a space, a tab followed by a newline.
+echo "$IFS" | cat -tve					#to view dafault IFS value
+ ^I$
+$
+IFS=";"  						#we can change it as per our need.
+____________________________________________________________________________________________________________________________________________________________
+
+loops in Linux?
+
+for i in `cat $list`; do
+    echo item: $i
+done
+
+------------------------
+
+while [ $COUNT -lt 10 ]; do
+    echo The counter value is $COUNT
+    let COUNT+=1
+done
+
+-----------------------
+
+until [ $COUNT -lt 10 ]; do
+    echo The counter value is $COUNT
+    let COUNT-=1
+done
+
+[ NOTE : In while , the loop executes as long as the condition is true; in until , it runs as long as the condition is false. ]
+____________________________________________________________________________________________________________________________________________________________
+
+By default, a new file and a new directory that is being created will have how many links?
+
+New file contains one link. 
+New directory contains two links. Every directory has a link to itself and its parent
+____________________________________________________________________________________________________________________________________________________________
+
+Differentiate between ‘ and ” and ` quotes
+
+V='some substrings grouped together'  # don't support substitution of variable. only string assignment
+X="Put $V to make a longer string"    # substitution of variable and then assignment
+Y=`date`                              # run command, assign its output
+____________________________________________________________________________________________________________________________________________________________
+
+How to create alias for all user or for a specific user.
+
+#To create aliases for all users
+> Create a file in /etc/profile.d/ directory & add alias to it.
+	myAlias.sh 
+#to create user specific alias 
+> add alias to 
+	~/.bashrc
+____________________________________________________________________________________________________________________________________________________________
+
+What is the difference between an application server and a Web server?
+
+Web server handles static request, exclusively handles HTTP/HTTPS requests 
+App server handles dynamic request, serves business logic to application programs through any number of protocols.
+____________________________________________________________________________________________________________________________________________________________
+
+What is chaos monkey used for?
+
+Chaos Monkey is a tool invented in 2011 by Netflix to test the resilience of its IT infrastructure.
+It test IT infrastructure to withstand unexpected conditions like Server shutdowns, Resource exhaustion.
+____________________________________________________________________________________________________________________________________________________________
+
+How to reduce or shrink the size of LVM (Logical volume manager) partition?
+
+Step:1 Umount the file system
+	umount /home/
+Step:2 Check the file system for Errors using e2fsck command.
+	e2fsck -f /dev/mapper/vg_cloud-LogVol00
+Step:3 Reduce or Shrink the size of /home to desire size.
+	resize2fs /dev/mapper/vg_cloud-LogVol00 10G
+Step:4 Now reduce the size using lvreduce command.
+	lvreduce -L 10G /dev/mapper/vg_cloud-LogVol00
+Step:5 Mount the file system and verify its size.
+	mount /home/
+____________________________________________________________________________________________________________________________________________________________
+
+List linux root top-level directories and their purposes?
+
+Directories must be present at boot time for proper bootup -
+	/root		-	home directory for the root user.
+	/lib		-	Contains shared library files
+	/etc		-	Contains the system configuration files.
+	/bin		-	Contains user executable files or command ultilties file.
+	/dev		-	Contains the device files for every hardware device attached to the system. 
+	/sbin		-	System binary files.Used for system administration
+
+Other directories -
+	/boot 		-	Contains the static bootloader and kernel executable and configuration files required to boot a Linux computer.
+	/opt 		-	In general, this directory used to install the 3rd party optional packages.
+	/tmp		-	Temporary directory. Used by the operating system and many programs to store temporary files
+	/var		-	Contain log files, database files, web server data files, email inboxes, and much more.
+	/usr		-  	Shareable, read-only files including executable binaries and libraries.
+____________________________________________________________________________________________________________________________________________________________
+
+important configuration files in /etc 
+
+/etc/passwd						#User account information. Username:Password:User ID:group ID:User Info:Home directory:Shell
+/etc/shadow 						#Secure account information. encrypted password is stored here. $1$ is MD5, $5$ is SHA-256, $6$ is SHA-512
+/etc/group 						#Group account information.
+/etc/default/useradd					#user default options while creating new user. useradd -D
+/etc/shells						#to check supported shells.
+/etc/inetd.conf						#This file tells which ports to listen to and what server to start for each port
+/etc/fstab						#his file contains the list of file system and it mount points

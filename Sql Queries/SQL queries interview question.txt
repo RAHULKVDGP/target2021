@@ -1,0 +1,303 @@
+What is the difference between DELETE and TRUNCATE statements?
+
+DELETE
+	Delete command is used to delete one or more row in a table.	
+	You can rollback data after using delete statement.	
+	It is a DML command.	
+	It is slower than truncate statement.	
+TRUNCATE
+	Truncate is used to delete all the rows from a table.
+	You cannot rollback data.
+	It is a DDL command.
+	It is faster.
+____________________________________________________________________________________________________________________________________________________________
+
+What are the different subsets of SQL?
+
+DDL (Data Definition Language) – It allows you to define the database schema. CREATE, ALTER, DROP, TRUNCATE and RENAME.
+DML ( Data Manipulation Language) – It allows you to access and manipulate data present in database.INSERT, UPDATE, DELETE, MERGE
+DCL ( Data Control Language) – It allows you to control access to the database. Example – GRANT and REVOKE access permissions.
+TCL (Transactional control Language) - Transaction Control Language commands are used to manage transactions in the database. COMMIT, ROLLBACK, SAVEPOINT, SET TRANSACTION.
+				       It allows you to manage the changes made by DML-statements.
+____________________________________________________________________________________________________________________________________________________________
+
+What are joins in SQL?
+
+JOIN - To combine rows from two or more tables, based on a related column between them. NULL value is used as output if there is no match.
+ON - To specify a join condition. SELECT * FROM T1 INNER JOIN T2 ON T1.C1=T2.C1;
+USING - To specify a join condition. SELECT * FROM T1 INNER JOIN T2 USING( c1, c2, ... ); #C1 C2 must be present in both tables 
+INNER JOIN - To return only those rows where the join condition is satisfied. Common rows only.
+LEFT JOIN - To return those rows where the join condition is satisfied plus non-satisfying rows from left table.
+RIGHT JOIN - To return those rows where the join condition is satisfied plus non-satisfying rows from right table.
+FULL OUTER JOIN - It's similar to union of left join and right join.
+CROSS JOIN - To generate a paired combination of each row of the first table with each row of the second table. Also known as cartesian join. SELECT C1, C2 FROM T1 CROSS JOIN T2;
+NATURAL JOIN - Join(INNER join, a LEFT OUTER join, or a RIGHT OUTER join) based on the common columns in the two tables being joined. The default is INNER join. ON clause not used.
+____________________________________________________________________________________________________________________________________________________________
+
+Difference between unique key and primary key?
+
+unique key can have NULL value where as primary key can't.
+multiple unique key can be present in a table but only one primary Key can be present in one table.
+____________________________________________________________________________________________________________________________________________________________
+
+What is Constraints?
+
+Constraints are used to specify the limit on the data type of the table. 
+It can be specified while creating or altering the table statement. 
+____________________________________________________________________________________________________________________________________________________________
+
+What is the difference between clustered and non clustered index in SQL?
+
+Clustered index is faster whereas non clustered index is relatively slower.
+One table can only have one clustered index whereas it can have many non clustered index.
+Clustered index alters the way records are stored in a database where as non clustered index is stored at one place and table data is stored in another place.
+____________________________________________________________________________________________________________________________________________________________
+
+What is Data Anomalies?
+
+> Problems occurred on data while inserting in tables, these are know as Data Anomalies.
+Types of Anomalies :
+	> INSERTION Anomalies
+	> UPDATION Anomalies
+	> DELETION Anomalies
+____________________________________________________________________________________________________________________________________________________________
+
+What is Normalization?
+
+Normalization is the process of organizing data to avoid duplication and redundancy.
+
+First Normal Form (1NF) - First Normal form ensures every column should have a single value.
+Condition to be in 1NF :
+	It should only have single(atomic) valued attributes/columns.
+
+Second Normal Form (2NF) -
+Condition to be in 2NF :
+	It has to be in 1NF
+	Every non-primary-key attribute is fully functionally dependent on the primary key.
+	 
+Third Normal Form (3NF) – 
+Condition to be in 3NF :
+	It has to be in 2NF 
+	No non-primary-key attribute is transitively dependent on the primary key.(A --> B --> C)
+
+BCNF(Boyce–Codd normal form) - Fourth form of normalization is BCNF and it makes sure that the table is in 3NF and there would be only one candidate key present.
+____________________________________________________________________________________________________________________________________________________________
+
+What is ACID property in a database?
+
+Atomicity: Either the entire transaction takes place at once or doesn’t happen at all. There is no midway i.e. transactions do not occur partially
+Consistency: The database must remain in a consistent state before and after any transaction.
+Isolation: Every transaction is isolated from one another. No transaction will affect the existence of any other transaction in the database.
+Durability : The database should be durable enough to hold all its latest transaction updates even if the system fails or restarts.
+____________________________________________________________________________________________________________________________________________________________
+
+What do you mean by “Trigger” in SQL?
+
+trigger is a stored procedure in database which automatically invokes whenever a database event occurs.
+DML Trigger: It fires when the DML event is specified (INSERT/UPDATE/DELETE)
+DDL Trigger: It fires when the DDL event is specified (CREATE/ALTER)
+DATABASE Trigger: It fires when the database event is specified (LOGON/LOGOFF/STARTUP/SHUTDOWN)
+____________________________________________________________________________________________________________________________________________________________
+
+What are the different types of a subquery?
+
+Correlated subquery: Correlated subquery is a query which select the data from a table referenced in the outer query.
+Non-Correlated subquery: Non-Correlated subquery is an independent query where the output of subquery is substituted in the main query.
+____________________________________________________________________________________________________________________________________________________________
+
+What is a Relationship and what are they?
+
+Relationships are defined as the connection between the tables in a database. defined with the help of PK and FK.
+1-1 --> person - passport
+1-M --> customer - account
+M-1 --> product - customer
+self-refering --> employees with manger details
+____________________________________________________________________________________________________________________________________________________________
+
+What is the difference between having and where clause?
+
+WHERE clause filter rows based on condition where as HAVING Clause filter result set of aggregated function or groups.
+WHERE clause used with SELECT, UPDATE, DELETE, etc. where as HAVING Clause can be usedc olny with SELECT.
+GROUP BY clause executed after WHERE clause where as GROUP BY is executed before the execution of the HAVING clause.
+____________________________________________________________________________________________________________________________________________________________
+
+How can you fetch alternate records from a table?
+
+To display even numbers, use the following command:
+	select studentId from (Select rowno, studentId from student) where mod(rowno,2)=0
+Now, to display odd numbers:
+	Select studentId from (Select rowno, studentId from student) where mod(rowno,2)=1
+____________________________________________________________________________________________________________________________________________________________
+
+What is a View?
+
+> A view is a SQL statement stored in the database with an associated name.
+> View cab be created by selecting fields from one or more tables.
+> WHERE and JOIN can be used for selecting field.
+
+CREATE VIEW view_name AS
+SELECT column1, column2.....
+FROM table_name
+WHERE [condition];
+____________________________________________________________________________________________________________________________________________________________
+
+What are Views used for?
+
+Restricting access to data.
+Making complex queries simple.
+____________________________________________________________________________________________________________________________________________________________
+
+What is a Stored Procedure?
+
+A stored procedure is a set of sql statement with a name that has been created and stored in a data base for reused over and over again.
+Stored Procedures are compiled in the database for the first time its executed and maintains the execution plan(buffer pool) for subsequent calls.
+____________________________________________________________________________________________________________________________________________________________
+
+What is sql injection?
+
+SQL injection is a code injection technique that might destroy your database.
+SQL injection is one of the most common web hacking techniques.
+____________________________________________________________________________________________________________________________________________________________
+
+How can you tell if a character is Unicode?
+
+Check the length of the string and size in bytes. using LENGHTB() & LENGHTC()
+If size in bytes is same as length of the string then it is ASCII character.
+If size in bytes is larger than length of the string, then it contains UNICODE characters.
+____________________________________________________________________________________________________________________________________________________________
+
+Difference between ASCII and unicode?
+
+ASCII represents lowercase letters (a-z), uppercase letters (A-Z), digits (0–9) and symbols such as punctuation marks.
+Unicode represents most written languages in the world 
+____________________________________________________________________________________________________________________________________________________________
+
+Difference between date and timestamp in oracle?
+
+DATE and TIMESTAMP have the same size (7 bytes). Those bytes are used to store century, decade, year, month, day, hour, minute and seconds. 
+But TIMESTAMP allows to store additional info such as fractional seconds (11 bytes) and fractional seconds with timezone (13 bytes)
+____________________________________________________________________________________________________________________________________________________________
+
+What is the difference between UNION & UNION ALL?
+
+Only difference is UNION ALL does not remove any duplicate rows from the output.
+
+____________________________________________________________________________________________________________________________________________________________
+
+What is the difference between COUNT (*), COUNT (expression), COUNT (distinct expression)?
+
+The COUNT function returns a numeric value.
+> COUNT (*): This returns a number of rows in a table including the duplicates & NULL values rows.
+> COUNT (EXP): This returns the number of non-null values in the column identified by an expression.
+> COUNT (DISTINCT EXP): It returns the number of unique, non-null values in the column identified by an expression.
+____________________________________________________________________________________________________________________________________________________________
+
+List out the difference between Commit, Rollback, and Savepoint?
+
+> The major differences between these are listed below:
+	Commit: This ends the current transaction by ensuring that all pending data changes are made permanent.
+	Rollback: This ends the current transaction by discarding or deleting all pending data changes.
+	Savepoint: It divides a transaction into smaller parts. You can rollback the transaction until you find a particular named savepoint.
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Write an SQL query to display the total salary of each employee adding the Salary with Variable value.
+
+SELECT EmpId, Salary + Variable as "TotalSalary"
+FROM EmployeeSalary;
+____________________________________________________________________________________________________________________________________________________________
+
+Write an SQL query to fetch employee names having a salary greater than or equal to 5000 and less than or equal to 10000.
+
+SELECT FullName 
+FROM EmployeeDetails 
+WHERE EmpId IN 
+(SELECT EmpId FROM EmployeeSalary 
+WHERE Salary BETWEEN 5000 AND 10000);
+____________________________________________________________________________________________________________________________________________________________
+
+Write an SQL query to fetch all employee records from EmployeeDetails table who have a salary record in EmployeeSalary table.
+
+SELECT * FROM EmployeeDetails E
+WHERE EXISTS
+(SELECT * FROM EmployeeSalary S 
+WHERE  E.EmpId = S.EmpId);
+____________________________________________________________________________________________________________________________________________________________
+
+Write an SQL query to fetch the employee full names and replace the space with ‘-’.
+
+SELECT REPLACE(FullName, ' ', '-')  				#REPLACE( string1, string_to_replace [, replacement_string] )				
+FROM EmployeeDetails;
+____________________________________________________________________________________________________________________________________________________________
+
+Write an SQL query to upper case the name of the employee and lower case the city values.
+
+SELECT UPPER(FullName), LOWER(City) 
+FROM EmployeeDetails;
+____________________________________________________________________________________________________________________________________________________________
+
+Write a query to fetch only the first name(string before space) from the FullName column of the EmployeeDetails table.
+
+SELECT SUBSTRING(FullName, 1, CHARINDEX(' ',FullName)) 		#SUBSTRING(string, start, length)
+FROM EmployeeDetails;
+____________________________________________________________________________________________________________________________________________________________
+
+Write a query to fetch employee names and salary records. Display the employee details even if the salary record is not present for the employee.
+
+SELECT E.FullName, S.Salary 
+FROM EmployeeDetails E 
+LEFT JOIN 
+EmployeeSalary S
+ON E.EmpId = S.EmpId;
+____________________________________________________________________________________________________________________________________________________________
+
+Write an SQL query to fetch all the Employees who are also managers from the EmployeeDetails table.
+
+SELECT DISTINCT E.FullName
+FROM EmployeeDetails E
+INNER JOIN EmployeeDetails M
+ON E.EmpID = M.ManagerID;
+____________________________________________________________________________________________________________________________________________________________
+
+Write an SQL query to fetch duplicate records from EmployeeDetails (without considering the primary key – EmpId).
+
+SELECT EmpId, FullName, ManagerId, DateOfJoining, City, COUNT(1)
+FROM EmployeeDetails
+GROUP BY EmpId, FullName, ManagerId, DateOfJoining, City
+HAVING COUNT(*) > 1;
+____________________________________________________________________________________________________________________________________________________________
+
+Write an SQL query to remove duplicates from EmployeeDetails without using a temporary table.
+
+DELETE e1 FROM EmployeeDetails e1, EmployeeDetails e2 	#Note - only those unique rows will be retained where FullName is unique and EmpId field is lowest.
+WHERE E1.EmpId > E2.EmpId
+AND E1.FullName = E2.FullName 
+AND E1.ManagerId = E2.ManagerId
+AND E1.DateOfJoining = E2.DateOfJoining
+AND E1.City = E2.City;
+____________________________________________________________________________________________________________________________________________________________
+
+Write an SQL query to find the nth highest salary from table.
+
+
+select min(salary) 
+from EmployeeSalary 
+where salary in (select distinct salary from EmployeeSalary order by Salary DESC limit N)
+
+select salary 
+from EmployeeSalary 
+where salary in (select distinct salary from EmployeeSalary order by Salary DESC limit N)
+order by Salary asc
+limit 1;
+____________________________________________________________________________________________________________________________________________________________
+
+Write SQL query to find the nth highest salary from a table without using the TOP/limit keyword.
+
+SELECT Salary
+FROM EmployeeSalary Emp1
+WHERE N-1 = (
+                SELECT COUNT( DISTINCT ( Emp2.Salary ) )
+                FROM EmployeeSalary Emp2
+                WHERE Emp2.Salary > Emp1.Salary
+            )
+____________________________________________________________________________________________________________________________________________________________

@@ -1,0 +1,300 @@
+shutdown						#to shutdown linux system
+init 0							#to shutdown the system
+init 6							#to reboot the system 
+shutdown -r now					 	#to restart immediately
+
+#to check OS & Kernel details
+cat /etc/os-release					#to check OS name & version
+hostnamectl						#shows OS deatils and Linux kernel version.
+lsb_release -a						#Linux Standard Base and distribution-specific information
+uname -a						#to check kernal version & release
+dmesg							#kernel ring buffer information. kernel ring buffer also stored in /var/log/dmesg file
+
+#resource management in linux (CPU, memory, Swap, disk space, disk I/O or network I/O)
+cgroups							#control group is a kernel feature to set limits for CPU, memory, and disk I/O for one or more processes.
+nice -n 19 ./myProcess.sh				#to set priority value before launching a process nice command is used. ranges from -20 (more cpu time) to 19 (less CPU time)
+renice -n 19 PID					#to set priority value after launching a process nice command is used. ranges from -20 (more cpu time) to 19 (less CPU time)	
+df -hT							#to check mount point disc space not all logical partitions. h for human readable format, T for also displaying filesystem.
+du -sh <file/folder>					#to check file & folder size
+top							#top command used to mange running process in real-time.
+htop							#htop is advanced version of top. htop uses color and gives visual information about processor, swap and memory status.
+top -b -o +%MEM | head -n 12				#to check top 5 memory consuming process [-b batch mode, -o sorting ]
+top -b -o +%CPU | head -n 12				#to check top 5 CPU consuming process [-b batch mode]
+ps -ef							#to display currently running processes.
+ps -eo pid,comm,%cpu,%mem --sort=-%cpu | head -6
+ps aux							#to display username, process id, %CPU, %MEM, virtual memory consumed, Command 
+sar –u 5 3						#to check cpu usage time delay 5 sec & 3 counts
+sar -q 10 5						#to check Load average
+free -m or free -g					#to check total, used, free, swap, chached memory.
+iostat -k 2 5						#to diplay input output device load(CPu). k for KB 
+w
+uptime							#used to find out how long the system is active. Load Average.
+
+#Server details 
+hostname						#Hostname
+hostname -i						#IP address
+id							#logged in user details.
+ip a							#To check ip configuration. Similar to ipconfig in windows to check ip address, mac address, ipv4, ipv6.
+env							#to check environment variable. set by /etc/profile & $HOME/.profile  or /etc/bash.bashrc & $HOME/.bash_profile (.bashrc) 
+export NAME=VALUE 					#Set an environment variable.
+echo $SHELL
+echo $PATH
+unset TMOUT						#to unset session logout time.
+
+
+#user management commad -
+useradd -p klesk@1 -u 1900 -g 2544 -d "/home/klesk" -s /bin/bash -e 2022-05-30 -c "This is a test user"	klesk		#command to add user. alternative command useradd
+passwd siebmast 					#to change password
+usermod -d /home/rahul klesk				#to modify the user group id,user id, comment, default shell etc. -G option to add more group to an user. -L to lock user
+userdel -r username					#to delete user plus home directory files and the user’s mail spool.
+killall -u username					#to kill all session of a specific user.
+userdel -f username					#to delete user forcefully without killing session.
+groupadd -g 1010 mygroup				#add new group details to /etc/group and /etc/gshadow files.
+groupdel mygroup					#to delete group
+newusers users.txt					#to add multiple users in a one go
+lsof -u username					#to list all open file by a specific user.
+chown owner:group sample.txt				#to change file owner
+chmod 777 sample.txt					#to change file permission
+chmod -R 777 <directory>					#to change file permission throughout the folder files plus sub folder files
+chsh -s /bin/sh						#to change user default shell
+chage -l username					#to verify the age of the account and password
+ulimit -Sa 						#to show soft limit of logged in user. All users can change soft limits, up to max set by the hard limits.
+ulimit -Ha 						#to show hard limit. Only root users allowed to change resource hard limits
+ulimit -S -c 1000					#To restrict core file size(disk) to 1000 block. 1 block = 0.5 kilobyte
+su - ravi -c "ulimit -Ha"
+
+#To check source & destination connectivity
+telnet localhost 22
+telnet $destinationIP $PORT
+ping $ipaddress
+ping $url
+traceroute host_Address					#Traceroute is the route tracing tool used on Unix-like Operating Systems 
+curl -v 'https://secure.3gdirectpay.com/API/v6/'
+
+#To check listening Port on local or remote server
+nmap -p 1-65535 localhost				#Nmap used to check open port on local and remote server (TCP Port range - 0 to 65535)
+nmap -p 8180 172.23.46.9
+nmap -sT -O 172.23.46.9    				#-O for open ports. list open TCP ports
+nmap -sU -O 172.23.46.9					#list open UDP ports
+nslookup <Domain_Name>					#to get information from DNS server. Non-administrative means from catch of DNS server. Or info form Administrative Server.
+nslookup -type=any <Domain_Name>			#to view all available DNS details.
+nslookup -type=a <Domain_Name>				#to view a particular record. like name, Ip address.
+nslookup -type=mx <Domain_Name>				#to view DNS mail server details.
+nslookup -type=ns <Domain_Name>				#to view DNS name server details.
+nslookup <IP Address>					#Reverse DNS lookup
+netstat -lntpu | grep LISTEN				#to check open port
+netstat -apn | grep 7070				#to check all connection to a particular port
+lsop -i TCP:8180 -s TCP:LISTEN				#file opend by network connection. To check open tcp port
+
+#Package/software application installation in linux
+apt-cache pkgnames Nginx				#To search package Nginx
+apt-get install <package_name>				#To install package httpd		
+apt-get update 						#Fetches the list of available updates
+apt-get upgrade -y					#Installs some updates; does not remove packages
+apt-get autoremove -y					#Removes any old packages that are no longer needed
+apt-get remove <package_name>				#To uninstall the package
+
+#Starting, Stoping, restarting service in linux based services/software application.
+service --status-all					#to check running status of all services
+service tomcat status					#to check running status of a particular service
+service tomcat start					#to check running status of a particular service
+/etc/init.d/atd start					#to start atd service.
+/etc/init.d/atd stop					#to start atd service.
+/etc/init.d/httpd status				#to check running status of a particular service
+systemctl status jenkins				#to check status of service
+systemctl start jenkins					#to check start jenkins service
+systemctl stop jenkins					#to check stop jenkins service
+systemctl restart jenkins				#to restart jenkins service
+
+#To run jobs at scheduled time.
+at 09:00						#it will open at command line, enter the command want to run at 9:00. save by Ctrl-D
+echo "shutdown -h now" | at 12:30 102921		#at command is used to schedule a command to be executed at a particular time in the future.
+at -l	 or    atq					#to list all schedule jobs
+atrm 14							#to remove scheduled job
+# Use the hash sign to prefix a comment
+# +—————- minute (0 – 59)
+# | +————- hour (0 – 23)
+# | | +———- day of month (1 – 31)
+# | | | +——- month (1 – 12)
+# | | | | +—- day of week (0 – 7) (Sunday=0 or 7)
+# | | | | | +- command to be executed
+# | | | | | |
+# * * * * * command					
+crontab -l						#to list scheduled cronjobs 
+crontab -e						#to edit or append scheduled cronjobs 
+
+#file searching utilities
+locate -i sample.txt													#command to locate a file 
+find /opt2/siebel/siebsrv -type f -mtime -30 -exec ls -l {} \; > ModifiedInLast30days.txt				#modified in last 30 days. -perm to specify permission
+find /opt2/siebel/siebsrv -type f -mtime +30 -exec ls -l {} \; > ModifiedBeforelast30days.txt				#older than 30 days.
+
+#commands to check inode value of files
+ls -li					#-i flag the results the file’s inode number
+stat <file/folder name>			#file/folder extra details including inode number
+
+#tar/tar.gz command 
+tar -cvf tarfilename.tar <folder>				#to create a .tar file of <folder>
+tar -czvf targzipfilename.tar.gz <folder>			#use -z option tu gzip tar file to compress into .tar.gz file.
+tar -xvf tarfilename.tar -C <destination_dir>			#to untar .tar file tarfilename.tar in <destination_dir> directory.Specify directory using -C option.
+tar -xzvf targzipfilename.tar.gz -C <destination_dir>		#to untar .tar.gz file targzipfilename.tar.gz in <destination_dir> directory.
+tar -tzvf targzipfilename.tar.gz				#to list files of targzipfilename.tar.gz file
+tar -rvf tarfilename.tar <file>					#to append(-apend or -r) a <file> to existing tar file. we can't append to .tar.gz file for that we need to gunzip it. 
+tar -dvf tarfilename.tar <file>					#to delete(–delete or -d) a <file> to existing tar file.
+#zip file
+zip zipfilename.zip <file_1> <file_2> ... <file_n>		#to compress file in .zip format.it create a single .zip file.
+zip -r zipfilename.zip <folder_1> <folder_2> ... <folder_n>	#to compress folder in .zip format.it create a single .zip file.
+unzip zipfilename.zip -d destination_folder			#-d is to define particular destination folder. to unzip .zip file
+#gz file 
+gzip -9 <file>							#Compression levels from 1 to 9(highest). 	
+gzip <file_1> <file_2> ... <file_n>				#to compress file in .gz format. it will create file1.gz, file2.gz, file3.gz. 
+gzip -r <folder_1>						#to compress folder in .gz format.
+gunzip filename.gz						#to extract .gz file 
+gunzip -k filename.gz						#to keep the compress .gz file use -k option
+
+#To run long job(scripts) run
+nohup sh -x script > log &					#Command to run long running job. nohup.out will log the terminal output.
+nohup								#nohup command used to run a long running job on a server. Continue after you have logged out or otherwise lost connection to the server.
+& (ampersand) 							#when a command ends with &, shell does not wait for the command to finish and shell prompt back while the command executes in background.
+jobs								#to check jobs that are currently running or suspended in the background.
+bg %n								#to places the specified foreground job in the background, where n is the job ID
+fg %n								#to brings the specified background job into the foreground, where n is the job ID
+Control-Z	 						#to stops the foreground job and places it in the background as a stopped job
+>								#output(STDOUT) redirection operator
+&>								#redirect both standard output and standard error.
+>>								#appends output to an existing file
+<								#input redirection operator
+2>								#means explicitly redirect stderr
+&1								#location of first file descriptor, i.e. stdout.
+2> /dev/null							#stderr are dumped to /dev/null, leaving only the stdout
+1> /dev/null							#stdout are dumped to /dev/null, leaving only the stderr
+> /dev/null 2>&1        					#first redirects stdout to /dev/null and then redirects stderr to stdout. This effectively silences all output.
+
+#use of stdin, stdout, stderr and null device while running command or script.
+sh -x script 							#stderr and stdout will display on the terminal.
+sh -x script > output.txt					#stdout will be redirected to output.txt file.
+sh -x script 2> output.txt					#stderr will be redirected to output.txt file.
+sh -x script > output.txt 2>&1					#stderr and stdout will be redirected to output.txt file.
+sh -x script > output.txt 2> error.txt				#stdout will be redirected to output.txt and stderr redirected to error.txt file
+sh -x script &> output.txt					#stderr and stdout will be redirected to output.txt file. Suported in Bash version 4
+sh -x script > /dev/null					#stdout will be redirected to output.txt file.
+sh -x script 2> /dev/null					#stderr will be redirected to output.txt file.
+sh -x script > /dev/null 2>&1					#stderr and stdout will be redirected to null device file.
+sh -x script > output.txt 2> /dev/null				#stdout will be redirected to output.txt and stderr redirected to null device.
+
+#SSH connection & file & folder copy command
+ssh <username>@<ip address>							#to connect remote machine.
+scp <file_1> <file_2> .. <file_n> <username>@<ip address>:/remote/directory	#to copy files to /remote/directory directory.
+scp -r /local/directory <username>@<ip address>:/remote/directory		#to copy all content of /local/directory to /remote/directory
+
+#Link in linux
+ln <file> <Hard link name>					#to create hard link
+ln -s <file or folder> <Soft link name>				#to create soft link (symbolic link)
+cat link_name							#to cat link file
+cd link_name							#to change directory to link orginal folder
+
+#umask is the linux command used to set default permission to newly created files and folder.
+umask					#display umask value
+umask 044             			#to set umask. result in 622 default permission to file & 733 default permission to folder.
+
+#File Management in Linux
+ls -lrthSa							#l - list,r - reverse order, t - time, h - human readable, S - size, a - hidden								
+ls -lrth
+ls -1
+pwd								#present working directory
+cd <directory>							#change directory
+cd ..
+cd ~								#change directory to $Home directory. 
+mkdir <folder>							#create folder
+cat <file>							#to create or view file
+zcat <zipfile>							#to view zip file
+touch <file>
+vi <file>
+rm -rf <file/folder>						#f - forecfully, r - recursively
+cp <file> <destination directory>				#copying file.
+cp -r <folder> <destination directory> 
+cp -R <directory> <destination directory> 
+mv <old_file> <new_file>					#rename and move file 
+dos2unix -437 filename filename					#DOS/MAC to UNIX text file format converter
+
+grep -i "search_string" <file>					#To grep "search_string" in a file
+grep -l "search_string" <file_1> <file_1> .. <file_n>		#to list file name which has "search_string" 
+grep -v "search_string" <file>					#to exclude the "search_string"
+grep -E 'ORA-|Err'						#to grep using regular expression.
+grep "^search_string" <file>					#to grep lines start with "search_string"
+grep "search_string$" <file>					#to grep lines end with "search_string"
+grep -w "search_string" <file>					#to grep exact match
+grep -n	"search_string" <file>					#to display the matched lines and their line numbers.
+grep -o "search_string" <file>					#to display only the matched pattern
+zgrep								#to grep zip file similar to grep command.
+sed -i 's/old-text/new-text/g' input.txt		     	#To replace 'old-text' with 'new-text' character. s is the substitute command 
+sed -i '/column_name1 column name2/d' input.txt			#To delete lines with column_name1 column name2.
+sed -i '0,/old-text/{s/old-text/ew-text/}' input.txt		#To replace first occurance of 'old-text' with 'new-text' character.
+sed -i -e '/FOO/s/old-text/new-text/' input.txt			#if line content a specific string FOO, than replace 'old-text' with 'new-text' character
+sort <file>							#to sort alphabatically
+sort -n <file>							#to sort numerically
+sort -rn <file>							#to sort in reverse order use -r option
+sort -k 3 <file>						#to sort alphabatically 3rd column.
+sort -k 3n <file>						#to sort numerically 3rd column.
+sort -u <file>							#to sort and remove duplicates
+column <file> -t -s ':'						#to display the contents of a file in columns. 
+sleep 10							#wait for 10 second. default unit is second.
+sleep 1m							#wait for 1 minute.
+tr '*' '#' <file>						#translate * to # present the file.
+echo $string | tr 'a' 'AZ' 					#translate a to AZ take input from $string variable print translated output.
+tr [a-z] [A-Z] < InputFile > OutputFile				#translate everything to CAPITAL
+tr -d ' ' <file>						#-d option to delete specific character
+cut -b 1,7 <file>						#-b option for bytes. display 1st and 7th byte 						
+cut -c 5-7 <file>						#-c optionn for column. display character between 5-7 range
+cut -c -5 <file>						#to display character between 1-5 range
+cut -d " " -f 1-3 <file>					#-f for field, -d for delimiter. Mostly used cut ccommand. use case : echo $var1 | cut -d ":" -f 4
+cut -d " " -f 1-4 <file> --output-delimiter='%'			#to replace delimiter " " with "%"
+wc -l								#to count the numer of lines
+awk
+
+#mailx command
+mailx -s "$Subject" -a "$attachment" -c "$cc"  -r "$from" "$to" << "$Body"
+echo "Mail Body" | mailx -v -s "$Subject" -S smtp="smtp server" -a "$attachment" -c "$cc"  -r "$from" "$to"
+cat ${BODY_FILE}; find $DIR_REPORT/${ACTUALEVENTID} -type f -name "*.csv" | while read name; do uuencode "$name" "${name##*/}"; done) | mailx -s "$Subject"  -c "$cc"  -r "$from" "$to"
+
+#Working with filesystem #physically install a new ssd
+fdisk /dev/sda							#use n to create new partition.d option to delete partition
+mkfs.ext4 /dev/sda4						#to format partition. don't forget to do format newly created partition. 
+mkdir /opt2/sieb						#create mount point.
+mount --types ext4 /dev/sda1 /opt2/sieb				#mount ext4 type filesystem /dev/sda1 partition to /opt2/sieb mount point.
+unmount /opt2/sieb						#to unmount a file system
+fdisk -l or parted -l						#to list all logical partitions
+lsblk -o NAME,FSTYPE,SIZE,MOUNTPOINT				#to list all primary & extended partitions
+blkid								#to list UUID, FILESYSTEM TYPE
+
+#other useful command
+tnsping SID							#to check tns entry of specified DB sid connectivity.
+which ls 							#to determine the path of an executable file
+date								#to print date
+id								#to print logged in user details
+history
+findmnt								#to display a list of currently mounted file systems
+findmnt --types xfs						#Listing only XFS file systems
+alias								#to list all alias
+alias CD="cd Desktop" 						#to create alias of a command.
+cksum sample.txt						#to validate files.
+echo "what is your name..?";read name				#to take input from user and assign it to name variable.
+history								#It list down commands used earlier. Up arrow does the same thing.
+history ID
+readonly $a							#to made unchangeable variable.
+firewall-cmd							#Command lin client to manage firewall runtime and permannent configuration.
+expr $a + $b							#arthemetic operations
+echo $a + $b | bc
+kill -9	PID							#to kill process		
+uptime								#how long the system has been up and also shows cpu load, number of users logged in.						
+clean								#to clean the terminal.
+exit
+$$								#to get PID number of the process executing the shell.
+$?								#to get the exit status.
+$0								#to get the command or script you used
+$1-$9								#to get argument on the command line.
+$*								#to print all the arguments passed. $1C$2C$3...$n
+$#								#to get number of arguments passed to the script.
+:-								#to set default value
+
+
+mongo -u selfcare_user -p services4selfcareuser 172.27.129.66:32017/africaappdb --authenticationDatabase africaappdb				#to check monodb connectivity.
